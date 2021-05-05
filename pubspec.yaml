@@ -50,6 +50,7 @@ flutter:
     - world_map.json
     - australia.json
     - south_america.json
+    - rs.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

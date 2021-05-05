@@ -35,7 +35,7 @@ class _WebPlataformState extends State<WebPlataform> {
     ];
 
     _mapSource = MapShapeSource.asset(
-      'assets/south_america.json',
+      'assets/rs.json',
       shapeDataField: 'STATE_NAME',
       dataCount: _data.length,
       primaryValueMapper: (int index) => _data[index].state,
