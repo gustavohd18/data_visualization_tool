@@ -6,7 +6,7 @@ void main(List<String> arguments) async {
   final list = await SUSService().getVaccines();
   print('size: ${list.length}');
   final list2 = list.take(10).toList();
-  print(list2[0]);
+  print(list2[0].vacinaNome);
 
   return runApp(MapsApp());
 }
