@@ -20,18 +20,10 @@ class _WebPlataformState extends State<WebPlataform> {
   @override
   void initState() {
     _data = const <Model>[
-      Model('New South Wales', Color.fromRGBO(255, 215, 0, 1.0),
-          '       New\nSouth Wales'),
-      Model('Queensland', Color.fromRGBO(72, 209, 204, 1.0), 'Queensland'),
-      Model('Northern Territory', Color.fromRGBO(255, 78, 66, 1.0),
-          'Northern\nTerritory'),
-      Model('Victoria', Color.fromRGBO(171, 56, 224, 0.75), 'Victoria'),
-      Model('South Australia', Color.fromRGBO(126, 247, 74, 0.75),
-          'South Australia'),
-      Model('Western Australia', Color.fromRGBO(79, 60, 201, 0.7),
-          'Western Australia'),
-      Model('Tasmania', Color.fromRGBO(99, 164, 230, 1), 'Tasmania'),
-      Model('Australian Capital Territory', Colors.teal, 'ACT')
+      Model('Aceguá', Color.fromRGBO(255, 215, 0, 1.0),
+          'Aceguá'),
+      Model('Água Santa', Color.fromRGBO(72, 209, 204, 1.0), 'Água Santa'),
+
     ];
 
     _mapSource = MapShapeSource.asset(
