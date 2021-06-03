@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 import "package:collection/collection.dart";
+
 /// This widget is the home page of the application.
 class WebPlataform extends StatefulWidget {
   /// Initialize the instance of the [MyHomePage] class.
@@ -17,26 +18,37 @@ class WebPlataform extends StatefulWidget {
 class _WebPlataformState extends State<WebPlataform> {
   _WebPlataformState();
 
-  late List<Vaccine> _data;
+  late Map<String, List<Vaccine>> _data;
   late MapShapeSource _mapSource;
 
   @override
   void initState() {
+    var newMap2 =
+        groupBy(widget.vaccines, (Vaccine obj) => obj.pacienteEnderecoUf);
 
-      var newMap = groupBy(widget.vaccines, (Vaccine obj) => obj.vacinaDataAplicacao);
-      newMap.forEach((key, value) {
-        print("keY: ${key}  and value: ${value}");
-      });
-    _data = widget.vaccines;
+    _data = newMap2;
 
-    _mapSource = MapShapeSource.asset(
-      'assets/brazil.json',
-      shapeDataField: 'sigla',
-      dataCount: _data.length,
-      primaryValueMapper: (int index) => _data[index].pacienteEnderecoUf.toUpperCase(),
-      dataLabelMapper: (int index) => _data[index].pacienteEnderecoUf.toUpperCase(),
-      shapeColorValueMapper: (int index) => Color.fromRGBO(72, 209, 204, 1.0),
-    );
+    _mapSource = MapShapeSource.asset('assets/brazil.json',
+        shapeDataField: 'sigla',
+        dataCount: _data.length, primaryValueMapper: (int index) {
+      var keys = _data.keys;
+      return keys.elementAt(index);
+    }, dataLabelMapper: (int index) {
+      var values = _data.values;
+      final List<Vaccine> list = values.elementAt(index);
+      return list.length.toString();
+    }, shapeColorValueMapper: (int index) {
+      var values = _data.values;
+      final List<Vaccine> list = values.elementAt(index);
+      final size = list.length;
+      if (size <= 1000) {
+        return Color.fromRGBO(72, 209, 204, 1.0);
+      } else if (size > 1000 && size <= 5000) {
+        return Color.fromRGBO(72, 220, 204, 1.0);
+      } else {
+        return Color.fromRGBO(72, 245, 204, 1.0);
+      }
+    });
     super.initState();
   }
 
@@ -61,7 +73,7 @@ class _WebPlataformState extends State<WebPlataform> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      _data[index].pacienteSexo,
+                      _data.keys.elementAt(index),
                       style: TextStyle(color: Colors.white),
                     ),
                   );
