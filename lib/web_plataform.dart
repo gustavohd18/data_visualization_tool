@@ -1,11 +1,14 @@
+import 'package:data_visualization/model/vaccine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
-
+import "package:collection/collection.dart";
 /// This widget is the home page of the application.
 class WebPlataform extends StatefulWidget {
   /// Initialize the instance of the [MyHomePage] class.
-  const WebPlataform({Key? key}) : super(key: key);
+  const WebPlataform({required this.vaccines});
+
+  final List<Vaccine> vaccines;
 
   @override
   _WebPlataformState createState() => _WebPlataformState();
@@ -14,25 +17,25 @@ class WebPlataform extends StatefulWidget {
 class _WebPlataformState extends State<WebPlataform> {
   _WebPlataformState();
 
-  late List<Model> _data;
+  late List<Vaccine> _data;
   late MapShapeSource _mapSource;
 
   @override
   void initState() {
-    _data = const <Model>[
-      Model('DF', Color.fromRGBO(255, 215, 0, 1.0),
-          'DF'),
-      Model('RS', Color.fromRGBO(72, 209, 204, 1.0), 'RS'),
 
-    ];
+      var newMap = groupBy(widget.vaccines, (Vaccine obj) => obj.vacinaDataAplicacao);
+      newMap.forEach((key, value) {
+        print("keY: ${key}  and value: ${value}");
+      });
+    _data = widget.vaccines;
 
     _mapSource = MapShapeSource.asset(
       'assets/brazil.json',
       shapeDataField: 'sigla',
       dataCount: _data.length,
-      primaryValueMapper: (int index) => _data[index].state,
-      dataLabelMapper: (int index) => _data[index].stateCode,
-      shapeColorValueMapper: (int index) => _data[index].color,
+      primaryValueMapper: (int index) => _data[index].pacienteEnderecoUf.toUpperCase(),
+      dataLabelMapper: (int index) => _data[index].pacienteEnderecoUf.toUpperCase(),
+      shapeColorValueMapper: (int index) => Color.fromRGBO(72, 209, 204, 1.0),
     );
     super.initState();
   }
@@ -58,7 +61,7 @@ class _WebPlataformState extends State<WebPlataform> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      _data[index].stateCode,
+                      _data[index].pacienteSexo,
                       style: TextStyle(color: Colors.white),
                     ),
                   );

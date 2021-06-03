@@ -28,16 +28,19 @@ class SUSService {
     // loop while variable
     var isFullData = true;
 
+    //var dinamyc;
+
     final url =
         Uri.parse('https://imunizacao-es.saude.gov.br/_search?scroll=1m');
     final response =
         await http.post(url, body: jsonEncode(body), headers: headers);
     if (response.statusCode == 200) {
       Map data = jsonDecode(response.body);
+      //dinamyc.addAll(data);
       scrollId = data['_scroll_id'];
       var list = (data['hits']['hits'] as List)
           .map((listVaccine) => Vaccine.vaccineFromJSON(listVaccine['_source']))
-        //  .where((i) => i.pacienteEnderecoUf == "RS")
+          //  .where((i) => i.pacienteEnderecoUf == "RS")
           .toList();
 
       // if (list.length >= 10) {
@@ -61,17 +64,16 @@ class SUSService {
             isFullData = false;
           } else {
             //var listFinal = listTemp
-             // .where((i) => i.pacienteEnderecoUf == "RS")
+            // .where((i) => i.pacienteEnderecoUf == "RS")
             //  .toList();
             list.addAll(listTemp);
           }
-          print("List size: ${list.length}");
 
-            if (limitRequest == 0) {
-             isFullData = false;
-           } else {
-             limitRequest = limitRequest - 1;
-            }
+          if (limitRequest == 0) {
+            isFullData = false;
+          } else {
+            limitRequest = limitRequest - 1;
+          }
         }
       }
 
