@@ -22,7 +22,7 @@ class SUSService {
 
     final body = {'size': '10000'};
 
-    var limitRequest = 10;
+    var limitRequest = 3;
 
     var scrollId = '';
     // loop while variable
@@ -67,11 +67,11 @@ class SUSService {
           }
           print("List size: ${list.length}");
 
-          //  if (limitRequest == 0) {
-          //   isFullData = false;
-          // } else {
-          //   limitRequest = limitRequest - 1;
-          //  }
+            if (limitRequest == 0) {
+             isFullData = false;
+           } else {
+             limitRequest = limitRequest - 1;
+            }
         }
       }
 

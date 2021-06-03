@@ -20,15 +20,15 @@ class _WebPlataformState extends State<WebPlataform> {
   @override
   void initState() {
     _data = const <Model>[
-      Model('Aceguá', Color.fromRGBO(255, 215, 0, 1.0),
-          'Aceguá'),
-      Model('Água Santa', Color.fromRGBO(72, 209, 204, 1.0), 'Água Santa'),
+      Model('DF', Color.fromRGBO(255, 215, 0, 1.0),
+          'DF'),
+      Model('RS', Color.fromRGBO(72, 209, 204, 1.0), 'RS'),
 
     ];
 
     _mapSource = MapShapeSource.asset(
-      'assets/rs.json',
-      shapeDataField: 'STATE_NAME',
+      'assets/brazil.json',
+      shapeDataField: 'sigla',
       dataCount: _data.length,
       primaryValueMapper: (int index) => _data[index].state,
       dataLabelMapper: (int index) => _data[index].stateCode,
@@ -41,7 +41,6 @@ class _WebPlataformState extends State<WebPlataform> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: 520,
         child: Center(
           child: SfMaps(
             layers: <MapShapeLayer>[

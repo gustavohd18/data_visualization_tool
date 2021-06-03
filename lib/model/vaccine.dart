@@ -6,12 +6,14 @@ class Vaccine {
     required this.vacinaDataAplicacao,
     required this.pacienteEnderecoUf,
     required this.pacienteSexo,
+    required this.pacienteRaca
   });
 
   final String
       vacinaNome,
       vacinaDataAplicacao,
       pacienteEnderecoUf,
+      pacienteRaca,
       pacienteSexo;
 
   factory Vaccine.vaccineFromJSON(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class Vaccine {
       vacinaDataAplicacao: json['vacina_dataAplicacao'].toString(),
       pacienteEnderecoUf: json['paciente_endereco_uf'].toString(),
       pacienteSexo: json['paciente_enumSexoBiologico'].toString(),
+      pacienteRaca: json['paciente_racaCor_codigo'].toString(),
     );
   }
 
@@ -32,6 +35,7 @@ class Vaccine {
       vacinaDataAplicacao: json['vacina_dataAplicacao'].toString(),
       pacienteEnderecoUf: json['paciente_endereco_uf'].toString(),
       pacienteSexo: json['paciente_enumSexoBiologico'].toString(),
+      pacienteRaca: json['paciente_racaCor_codigo'].toString(),
     );
   }
 }
