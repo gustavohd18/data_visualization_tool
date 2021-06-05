@@ -4,9 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 import "package:collection/collection.dart";
 
-/// This widget is the home page of the application.
 class WebPlataform extends StatefulWidget {
-  /// Initialize the instance of the [MyHomePage] class.
   const WebPlataform({required this.vaccines});
 
   final List<Vaccine> vaccines;
@@ -36,7 +34,10 @@ class _WebPlataformState extends State<WebPlataform> {
     }, dataLabelMapper: (int index) {
       var values = _data.values;
       final List<Vaccine> list = values.elementAt(index);
-      return list.length.toString();
+      final keys = _data.keys;
+      final state = keys.elementAt(index);
+      final text = "$state\n ${list.length.toString()}";
+      return text;
     }, shapeColorValueMapper: (int index) {
       var values = _data.values;
       final List<Vaccine> list = values.elementAt(index);
@@ -73,8 +74,8 @@ class _WebPlataformState extends State<WebPlataform> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      _data.keys.elementAt(index),
-                      style: TextStyle(color: Colors.white),
+                      "${_data.keys.elementAt(index)}\nvacinas: ${_data.values.elementAt(index).length.toString()}",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   );
                 },
@@ -91,19 +92,4 @@ class _WebPlataformState extends State<WebPlataform> {
       ),
     );
   }
-}
-
-/// Collection of Australia state code data.
-class Model {
-  /// Initialize the instance of the [Model] class.
-  const Model(this.state, this.color, this.stateCode);
-
-  /// Represents the Australia state name.
-  final String state;
-
-  /// Represents the Australia state color.
-  final Color color;
-
-  /// Represents the Australia state code.
-  final String stateCode;
 }
