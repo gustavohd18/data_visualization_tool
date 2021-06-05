@@ -44,27 +44,55 @@ class _WebPlataformState extends State<WebPlataform> {
       final List<Vaccine> list = values.elementAt(index);
       final size = list.length;
       if (size <= 1000) {
-        return Color.fromRGBO(72, 200, 204, 1.0);
+        return 10;
       } else if (size > 1000 && size <= 5000) {
-        return Color.fromRGBO(72, 205, 204, 1.0);
+        return 20;
       } else if (size > 5000 && size <= 9000) {
-        return Color.fromRGBO(72, 210, 204, 1.0);
+        return 25;
       } else if (size > 9000 && size <= 12000) {
-        return Color.fromRGBO(72, 215, 204, 1.0);
+        return 30;
       } else if (size > 12000 && size <= 18000) {
-        return Color.fromRGBO(72, 220, 204, 1.0);
+        return 35;
       } else if (size > 18000 && size <= 30000) {
-        return Color.fromRGBO(72, 225, 204, 1.0);
+        return 40;
       } else if (size > 30000 && size <= 40000) {
-        return Color.fromRGBO(72, 230, 204, 1.0);
+        return 45;
       } else if (size > 40000 && size <= 50000) {
-        return Color.fromRGBO(72, 235, 204, 1.0);
+        return 50;
       } else if (size > 50000 && size <= 55000) {
-        return Color.fromRGBO(72, 240, 204, 1.0);
+        return 55;
       } else {
-        return Color.fromRGBO(72, 245, 204, 1.0);
+        return 60;
       }
-    });
+    }, shapeColorMappers: [
+      MapColorMapper(
+          from: 0, to: 10, color: Colors.red, text: '< 1000 vacinas'),
+      MapColorMapper(
+          from: 11,
+          to: 20,
+          color: Color.fromRGBO(42, 111, 55, 1.0),
+          text: '1000 - 5000 vacinas'),
+      MapColorMapper(
+          from: 21,
+          to: 30,
+          color: Color.fromRGBO(26, 148, 49, 1.0),
+          text: '5001 - 12000 vacinas'),
+      MapColorMapper(
+          from: 31,
+          to: 40,
+          color: Color.fromRGBO(89, 182, 91, 1.0),
+          text: '12001 - 30000 vacinas'),
+      MapColorMapper(
+          from: 41,
+          to: 50,
+          color: Color.fromRGBO(98, 166, 92, 1.0),
+          text: '30001 - 50000 vacinas'),
+      MapColorMapper(
+          from: 51,
+          to: 60,
+          color: Color.fromRGBO(119, 176, 108, 1.0),
+          text: '+ 50000 vacinas'),
+    ]);
     super.initState();
   }
 
