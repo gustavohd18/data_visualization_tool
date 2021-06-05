@@ -23,25 +23,26 @@ class _MobilePlataformState extends State<MobilePlataform> {
   Widget build(BuildContext context) {
     final List<ChartData> chartData = [
       ChartData('Branco', 25, Colors.black54),
-      ChartData('Pardo', 38,  Colors.blueAccent),
-      ChartData('Negro', 34,  Colors.red),
-      ChartData('Sem identificacao', 52,  Colors.green)
+      ChartData('Pardo', 38, Colors.blueAccent),
+      ChartData('Negro', 34, Colors.red),
+      ChartData('Sem identificacao', 52, Colors.green)
     ];
     return Scaffold(
         body: Center(
             child: Container(
-                child: SfCircularChart(legend: Legend(isVisible: true),  tooltipBehavior: TooltipBehavior(enable: true),series: <CircularSeries>[
-      // Render pie chart
-      PieSeries<ChartData, String>(
-          enableTooltip: true, 
-          dataSource: chartData,
-          xValueMapper: (ChartData data, _) => data.x,
-          yValueMapper: (ChartData data, _) => data.y,
-          // Render the data label
-          dataLabelSettings:DataLabelSettings(isVisible : true)
-)
-         
-    ]))));
+                child: SfCircularChart(
+                    legend: Legend(isVisible: true),
+                    tooltipBehavior: TooltipBehavior(enable: true),
+                    series: <CircularSeries>[
+          // Render pie chart
+          PieSeries<ChartData, String>(
+              enableTooltip: true,
+              dataSource: chartData,
+              xValueMapper: (ChartData data, _) => data.x,
+              yValueMapper: (ChartData data, _) => data.y,
+              // Render the data label
+              dataLabelSettings: DataLabelSettings(isVisible: true))
+        ]))));
   }
 }
 

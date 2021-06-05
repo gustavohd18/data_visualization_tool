@@ -1,16 +1,14 @@
 import 'package:intl/intl.dart';
 
 class Vaccine {
-  Vaccine({
-    required this.vacinaNome,
-    required this.vacinaDataAplicacao,
-    required this.pacienteEnderecoUf,
-    required this.pacienteSexo,
-    required this.pacienteRaca
-  });
+  Vaccine(
+      {required this.vacinaNome,
+      required this.vacinaDataAplicacao,
+      required this.pacienteEnderecoUf,
+      required this.pacienteSexo,
+      required this.pacienteRaca});
 
-  final String
-      vacinaNome,
+  final String vacinaNome,
       vacinaDataAplicacao,
       pacienteEnderecoUf,
       pacienteRaca,
@@ -31,7 +29,7 @@ class Vaccine {
 
   factory Vaccine.seriesFromJSON(Map<String, dynamic> json) {
     //final dateParser = DateTime.parse(json['first_air_date']);
-   // final dateFormatter = DateFormat('yMMM');
+    // final dateFormatter = DateFormat('yMMM');
     //String finalDate = (dateFormatter.format(dateParser)).toString();
     return Vaccine(
       vacinaNome: json['vacina_nome'].toString(),
