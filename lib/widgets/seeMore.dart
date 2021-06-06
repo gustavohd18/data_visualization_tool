@@ -2,16 +2,27 @@ import 'package:data_visualization/model/vaccine.dart';
 import 'package:flutter/material.dart';
 
 class SeeMore extends StatefulWidget {
-  const SeeMore({required this.vaccines, required this.legend});
+  const SeeMore(
+      {required this.vaccines, required this.legend, required this.state});
 
   final String legend;
   final List<Vaccine> vaccines;
+  final String state;
 
   @override
   _SeeMoreState createState() => _SeeMoreState();
 }
 
 class _SeeMoreState extends State<SeeMore> {
+  late int size;
+  @override
+  void initState() {
+    size = widget.vaccines
+        .where((element) => element.pacienteEnderecoUf == widget.state)
+        .length;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,15 +37,6 @@ class _SeeMoreState extends State<SeeMore> {
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              onPressed: () {
-                print("Clicked");
-              },
-              child: Text('TextButton'),
-            )
           ],
         ));
   }

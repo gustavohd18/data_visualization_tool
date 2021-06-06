@@ -137,15 +137,16 @@ class _MapSliderState extends State<MapSlider> {
                 strokeWidth: 0.5,
                 shapeTooltipBuilder: (BuildContext context, int index) {
                   final state = _dataFinal[index].pacienteEnderecoUf;
-                  final size = 0;
-                  final woman = 0;
-                  final man = 0;
-                  return GestureDetector(
-                      onTap: () => print("Clicked"),
-                      child: SeeMore(
-                        legend: "$state\nvacinas: $size \nF:$woman\nM:$man",
-                        vaccines: _data.values.elementAt(index),
-                      ));
+                        final size = _dataFinal
+          .where((element) =>
+              element.pacienteEnderecoUf ==
+              _dataFinal[index].pacienteEnderecoUf)
+          .length;
+                  return  SeeMore(
+                        legend:
+                            "$state\n vacinas:$size",
+                        vaccines: _dataFinal, state: state,);
+          
                 },
                 dataLabelSettings: MapDataLabelSettings(
                     textStyle: TextStyle(

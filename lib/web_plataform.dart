@@ -128,6 +128,7 @@ class _WebPlataformState extends State<WebPlataform> {
                         legend:
                             "${_data.keys.elementAt(index)}\nvacinas: ${_data.values.elementAt(index).length.toString()}",
                         vaccines: _data.values.elementAt(index),
+                        state: "",
                       ));
                 },
                 dataLabelSettings: MapDataLabelSettings(
