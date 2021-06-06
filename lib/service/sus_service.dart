@@ -22,7 +22,7 @@ class SUSService {
 
     final body = {'size': '10000'};
 
-    var limitRequest = 10;
+    var limitRequest = 5;
 
     var scrollId = '';
     var isFullData = true;

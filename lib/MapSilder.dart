@@ -7,17 +7,17 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import "package:collection/collection.dart";
 import 'package:intl/intl.dart';
 
-class WebPlataform2 extends StatefulWidget {
-  const WebPlataform2({required this.vaccines});
+class MapSlider extends StatefulWidget {
+  const MapSlider({required this.vaccines});
 
   final List<Vaccine> vaccines;
 
   @override
-  _WebPlataformState createState() => _WebPlataformState();
+  _MapSliderState createState() => _MapSliderState();
 }
 
-class _WebPlataformState extends State<WebPlataform2> {
-  _WebPlataformState();
+class _MapSliderState extends State<MapSlider> {
+  _MapSliderState();
 
   late Map<DateTime, List<Vaccine>> _data;
   late List<Vaccine> _dataFinal;
