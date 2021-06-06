@@ -136,11 +136,14 @@ class _MapSliderState extends State<MapSlider> {
                 strokeColor: Colors.white,
                 strokeWidth: 0.5,
                 shapeTooltipBuilder: (BuildContext context, int index) {
+                  final state = _dataFinal[index].pacienteEnderecoUf;
+                  final size = 0;
+                  final woman = 0;
+                  final man = 0;
                   return GestureDetector(
                       onTap: () => print("Clicked"),
                       child: SeeMore(
-                        legend:
-                            "${_data.keys.elementAt(index)}\nvacinas: ${_data.values.elementAt(index).length.toString()}",
+                        legend: "$state\nvacinas: $size \nF:$woman\nM:$man",
                         vaccines: _data.values.elementAt(index),
                       ));
                 },

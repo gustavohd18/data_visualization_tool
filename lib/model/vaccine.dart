@@ -13,8 +13,6 @@ class Vaccine {
 
   factory Vaccine.vaccineFromJSON(Map<String, dynamic> json) {
     final dateParser = DateTime.parse(json['vacina_dataAplicacao']);
-    final dateFormatter = DateFormat('EEE, M,d,y');
-    String finalDate = (dateFormatter.format(dateParser)).toString();
     return Vaccine(
       vacinaNome: json['vacina_nome'].toString(),
       vacinaDataAplicacao: dateParser,
