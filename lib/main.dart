@@ -1,6 +1,7 @@
 import 'package:data_visualization/model/vaccine.dart';
 import 'package:data_visualization/service/sus_service.dart';
 import 'package:data_visualization/web_plataform.dart';
+import 'package:data_visualization/web_plataform2.dart';
 import 'package:flutter/material.dart';
 
 void main(List<String> arguments) async {
@@ -20,7 +21,7 @@ class MapsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Maps Demo',
-      home: WebPlataform(
+      home: WebPlataform2(
         vaccines: vaccines,
       ), //WebPlataform(),
     );

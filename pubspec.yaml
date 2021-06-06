@@ -31,7 +31,7 @@ dependencies:
   syncfusion_flutter_maps: ^19.1.58-beta
   syncfusion_flutter_charts: ^19.1.59
   http: ^0.13.3
-  csv: ^5.0.0
+  syncfusion_flutter_sliders: ^19.1.66-beta
 
 
 dev_dependencies:

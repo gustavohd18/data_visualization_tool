@@ -15,8 +15,8 @@ class _SeeMoreState extends State<SeeMore> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 120,
-        height: 120,
+        width: 300,
+        height: 300,
         child: Column(
           children: [
             Padding(
@@ -26,9 +26,14 @@ class _SeeMoreState extends State<SeeMore> {
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
-            Text(
-              "Veja mais",
-              style: TextStyle(color: Colors.white, fontSize: 20),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              onPressed: () {
+                print("Clicked");
+              },
+              child: Text('TextButton'),
             )
           ],
         ));

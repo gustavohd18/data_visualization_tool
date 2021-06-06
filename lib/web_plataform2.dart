@@ -5,9 +5,10 @@ import 'package:flutter/rendering.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import "package:collection/collection.dart";
+import 'package:intl/intl.dart';
 
-class WebPlataform extends StatefulWidget {
-  const WebPlataform({required this.vaccines});
+class WebPlataform2 extends StatefulWidget {
+  const WebPlataform2({required this.vaccines});
 
   final List<Vaccine> vaccines;
 
@@ -15,36 +16,49 @@ class WebPlataform extends StatefulWidget {
   _WebPlataformState createState() => _WebPlataformState();
 }
 
-class _WebPlataformState extends State<WebPlataform> {
+class _WebPlataformState extends State<WebPlataform2> {
   _WebPlataformState();
 
-  late Map<String, List<Vaccine>> _data;
+  late Map<DateTime, List<Vaccine>> _data;
+  late List<Vaccine> _dataFinal;
   late MapShapeSource _mapSource;
-  double _value = 0.5;
+  DateTime _min = DateTime(2008, 01, 01);
+  DateTime _max = DateTime(2018, 01, 01);
+  DateTime _value = DateTime(2012, 01, 01);
 
   @override
   void initState() {
     var newMap2 =
-        groupBy(widget.vaccines, (Vaccine obj) => obj.pacienteEnderecoUf);
+        groupBy(widget.vaccines, (Vaccine obj) => obj.vacinaDataAplicacao);
+
+    _min = newMap2.keys.min;
+    _max = newMap2.keys.max;
+    _value = newMap2.keys.min;
+
+    print("Data ${_min} max ${_max} ${_value}");
 
     _data = newMap2;
 
+    _dataFinal =
+        _data.entries.firstWhere((element) => element.key == _value).value;
+
     _mapSource = MapShapeSource.asset('assets/brazil.json',
         shapeDataField: 'sigla',
-        dataCount: _data.length, primaryValueMapper: (int index) {
-      var keys = _data.keys;
-      return keys.elementAt(index);
+        dataCount: _dataFinal.length, primaryValueMapper: (int index) {
+      return _dataFinal[index].pacienteEnderecoUf;
     }, dataLabelMapper: (int index) {
-      var values = _data.values;
-      final List<Vaccine> list = values.elementAt(index);
-      final keys = _data.keys;
-      final state = keys.elementAt(index);
-      final text = "$state\n ${list.length.toString()}";
+      final state = _dataFinal[index].pacienteEnderecoUf;
+      final size = _dataFinal
+          .where((element) => element.pacienteEnderecoUf == state)
+          .length;
+      final text = "$state\n $size";
       return text;
     }, shapeColorValueMapper: (int index) {
-      var values = _data.values;
-      final List<Vaccine> list = values.elementAt(index);
-      final size = list.length;
+      final size = _dataFinal
+          .where((element) =>
+              element.pacienteEnderecoUf ==
+              _dataFinal[index].pacienteEnderecoUf)
+          .length;
       if (size <= 1000) {
         return 10;
       } else if (size > 1000 && size <= 5000) {
@@ -141,15 +155,19 @@ class _WebPlataformState extends State<WebPlataform> {
         ),
       )),
       SfSlider(
-                min: 0.0,
-                max: 10.0,
-                value: _value,
-                onChanged: (dynamic newValue) {
-                  setState(() {
-                    _value = newValue;
-                  });
-                },
-              )
+        min: _min,
+        max: _max,
+        value: _value,
+        showLabels: true,
+        dateIntervalType: DateIntervalType.days,
+        onChanged: (dynamic newValue) {
+          setState(() {
+            _value = newValue;
+           _dataFinal =
+             _data.entries.firstWhere((element) => element.key == _value).value;
+          });
+        },
+      )
     ])));
   }
 }
