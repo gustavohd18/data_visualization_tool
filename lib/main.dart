@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 void main(List<String> arguments) async {
   final list = await SUSService().getVaccines();
   print('size: ${list.length}');
+  print("${list[0].pacienteRaca}");
 
   return runApp(MapsApp(
     vaccines: list,

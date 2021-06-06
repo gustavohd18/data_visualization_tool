@@ -154,9 +154,60 @@ class _MapSliderState extends State<MapSlider> {
                               _dataFinal[index].pacienteEnderecoUf &&
                           element.pacienteSexo == "M")
                       .length;
+                  final black = _dataFinal
+                      .where((element) =>
+                          element.pacienteEnderecoUf ==
+                              _dataFinal[index].pacienteEnderecoUf &&
+                          element.pacienteRaca == "02")
+                      .length;
+                  final blank = _dataFinal
+                      .where((element) =>
+                          element.pacienteEnderecoUf ==
+                              _dataFinal[index].pacienteEnderecoUf &&
+                          element.pacienteRaca == "01")
+                      .length;
+                  final pard = _dataFinal
+                      .where((element) =>
+                          element.pacienteEnderecoUf ==
+                              _dataFinal[index].pacienteEnderecoUf &&
+                          element.pacienteRaca == "03")
+                      .length;
+                  final yellow = _dataFinal
+                      .where((element) =>
+                          element.pacienteEnderecoUf ==
+                              _dataFinal[index].pacienteEnderecoUf &&
+                          element.pacienteRaca == "04")
+                      .length;
+                  final noInformation = _dataFinal
+                      .where((element) =>
+                          element.pacienteEnderecoUf ==
+                              _dataFinal[index].pacienteEnderecoUf &&
+                          element.pacienteRaca == "99")
+                      .length;
+
+                  final butantan = _dataFinal
+                      .where((element) =>
+                          element.pacienteEnderecoUf ==
+                              _dataFinal[index].pacienteEnderecoUf &&
+                          element.vacinaNome ==
+                              "Covid-19-Coronavac-Sinovac/Butantan")
+                      .length;
+                  final covishield = _dataFinal
+                      .where((element) =>
+                          element.pacienteEnderecoUf ==
+                              _dataFinal[index].pacienteEnderecoUf &&
+                          element.vacinaNome == "Vacina Covid-19 - Covishield")
+                      .length;
+
+                  final astraZeneca = _dataFinal
+                      .where((element) =>
+                          element.pacienteEnderecoUf ==
+                              _dataFinal[index].pacienteEnderecoUf &&
+                          element.vacinaNome == "Covid-19-AstraZeneca")
+                      .length;
                   return SeeMore(
                     legend:
-                        "$state\n vacinas:$size\n Mulheres: $woman\n Homens:$man",
+                        "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: $woman\n Homens:$man \n\n Raça:\n Branca: $blank\n Preta: $black\n Parda: $pard \n Amarela: $yellow \n Não informado: $noInformation \n\n Vacinas:\n Sinovac/Butantan:$butantan\n Covishield:$covishield\n AstraZeneca:$astraZeneca",
                     vaccines: _dataFinal,
                     state: state,
                   );

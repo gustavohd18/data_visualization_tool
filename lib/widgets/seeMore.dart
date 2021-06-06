@@ -26,8 +26,8 @@ class _SeeMoreState extends State<SeeMore> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 300,
-        height: 300,
+        width: 550,
+        height: 500,
         child: Column(
           children: [
             Padding(
