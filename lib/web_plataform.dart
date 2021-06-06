@@ -3,6 +3,7 @@ import 'package:data_visualization/widgets/seeMore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 import "package:collection/collection.dart";
 
 class WebPlataform extends StatefulWidget {
@@ -19,6 +20,7 @@ class _WebPlataformState extends State<WebPlataform> {
 
   late Map<String, List<Vaccine>> _data;
   late MapShapeSource _mapSource;
+  double _value = 0.5;
 
   @override
   void initState() {
@@ -121,11 +123,12 @@ class _WebPlataformState extends State<WebPlataform> {
                 strokeWidth: 0.5,
                 shapeTooltipBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                      onDoubleTap: () => print("Clicked"),
+                      onTap: () => print("Clicked"),
                       child: SeeMore(
                         legend:
                             "${_data.keys.elementAt(index)}\nvacinas: ${_data.values.elementAt(index).length.toString()}",
                         vaccines: _data.values.elementAt(index),
+                        state: "",
                       ));
                 },
                 dataLabelSettings: MapDataLabelSettings(
@@ -137,7 +140,17 @@ class _WebPlataformState extends State<WebPlataform> {
             ],
           ),
         ),
-      ))
+      )),
+      SfSlider(
+        min: 0.0,
+        max: 10.0,
+        value: _value,
+        onChanged: (dynamic newValue) {
+          setState(() {
+            _value = newValue;
+          });
+        },
+      )
     ])));
   }
 }

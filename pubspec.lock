@@ -43,13 +43,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
-  csv:
-    dependency: "direct main"
-    description:
-      name: csv
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.0"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -169,7 +162,7 @@ packages:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.1.65"
+    version: "19.1.66"
   syncfusion_flutter_maps:
     dependency: "direct main"
     description:
@@ -177,6 +170,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "19.1.65-beta"
+  syncfusion_flutter_sliders:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_sliders
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "19.1.66-beta"
   term_glyph:
     dependency: transitive
     description:
