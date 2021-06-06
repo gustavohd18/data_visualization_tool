@@ -22,13 +22,10 @@ class SUSService {
 
     final body = {'size': '10000'};
 
-    var limitRequest = 30;
+    var limitRequest = 10;
 
     var scrollId = '';
-    // loop while variable
     var isFullData = true;
-
-    //var dinamyc;
 
     final url =
         Uri.parse('https://imunizacao-es.saude.gov.br/_search?scroll=1m');
@@ -36,17 +33,14 @@ class SUSService {
         await http.post(url, body: jsonEncode(body), headers: headers);
     if (response.statusCode == 200) {
       Map data = jsonDecode(response.body);
-      //dinamyc.addAll(data);
       scrollId = data['_scroll_id'];
       var list = (data['hits']['hits'] as List)
           .map((listVaccine) => Vaccine.vaccineFromJSON(listVaccine['_source']))
-          //  .where((i) => i.pacienteEnderecoUf == "RS")
+          .where((i) =>
+              i.vacinaDataAplicacao.year != 2018 &&
+              i.vacinaDataAplicacao.year != 2019)
           .toList();
 
-      // if (list.length >= 10) {
-      //   list = list.take(10).toList();
-      // }
-      //proximos passos aqui aprimeira retornou  o scroll id
       while (isFullData) {
         final bodyRequest = {"scroll_id": scrollId, "scroll": '1m'};
         final url =
@@ -59,13 +53,13 @@ class SUSService {
           var listTemp = (data['hits']['hits'] as List)
               .map((listVaccine) =>
                   Vaccine.vaccineFromJSON(listVaccine['_source']))
+              .where((i) =>
+                  i.vacinaDataAplicacao.year != 2018 &&
+                  i.vacinaDataAplicacao.year != 2019)
               .toList();
           if (listTemp.isEmpty) {
             isFullData = false;
           } else {
-            //var listFinal = listTemp
-            // .where((i) => i.pacienteEnderecoUf == "RS")
-            //  .toList();
             list.addAll(listTemp);
           }
 

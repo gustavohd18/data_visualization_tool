@@ -159,8 +159,9 @@ class _WebPlataformState extends State<WebPlataform2> {
         max: _max,
         value: _value,
         interval: 1,
-        showLabels: true,
+        enableTooltip: true,
         dateIntervalType: DateIntervalType.days,
+        dateFormat: DateFormat.yMEd(),
         onChanged: (dynamic newValue) {
           setState(() {
             _value = newValue;
