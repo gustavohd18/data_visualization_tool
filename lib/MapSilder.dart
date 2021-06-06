@@ -137,16 +137,29 @@ class _MapSliderState extends State<MapSlider> {
                 strokeWidth: 0.5,
                 shapeTooltipBuilder: (BuildContext context, int index) {
                   final state = _dataFinal[index].pacienteEnderecoUf;
-                        final size = _dataFinal
-          .where((element) =>
-              element.pacienteEnderecoUf ==
-              _dataFinal[index].pacienteEnderecoUf)
-          .length;
-                  return  SeeMore(
-                        legend:
-                            "$state\n vacinas:$size",
-                        vaccines: _dataFinal, state: state,);
-          
+                  final size = _dataFinal
+                      .where((element) =>
+                          element.pacienteEnderecoUf ==
+                          _dataFinal[index].pacienteEnderecoUf)
+                      .length;
+                  final woman = _dataFinal
+                      .where((element) =>
+                          element.pacienteEnderecoUf ==
+                              _dataFinal[index].pacienteEnderecoUf &&
+                          element.pacienteSexo == "F")
+                      .length;
+                  final man = _dataFinal
+                      .where((element) =>
+                          element.pacienteEnderecoUf ==
+                              _dataFinal[index].pacienteEnderecoUf &&
+                          element.pacienteSexo == "M")
+                      .length;
+                  return SeeMore(
+                    legend:
+                        "$state\n vacinas:$size\n Mulheres: $woman\n Homens:$man",
+                    vaccines: _dataFinal,
+                    state: state,
+                  );
                 },
                 dataLabelSettings: MapDataLabelSettings(
                     textStyle: TextStyle(
