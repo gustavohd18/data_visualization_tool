@@ -141,15 +141,15 @@ class _WebPlataformState extends State<WebPlataform> {
         ),
       )),
       SfSlider(
-                min: 0.0,
-                max: 10.0,
-                value: _value,
-                onChanged: (dynamic newValue) {
-                  setState(() {
-                    _value = newValue;
-                  });
-                },
-              )
+        min: 0.0,
+        max: 10.0,
+        value: _value,
+        onChanged: (dynamic newValue) {
+          setState(() {
+            _value = newValue;
+          });
+        },
+      )
     ])));
   }
 }

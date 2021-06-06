@@ -158,13 +158,86 @@ class _WebPlataformState extends State<WebPlataform2> {
         min: _min,
         max: _max,
         value: _value,
+        interval: 1,
         showLabels: true,
         dateIntervalType: DateIntervalType.days,
         onChanged: (dynamic newValue) {
           setState(() {
             _value = newValue;
-           _dataFinal =
-             _data.entries.firstWhere((element) => element.key == _value).value;
+            _value = DateTime(_value.year, _value.month, _value.day);
+            _dataFinal = _data.entries
+                .firstWhere((element) =>
+                    element.key.day == _value.day &&
+                    element.key.month == _value.month &&
+                    element.key.year == _value.year)
+                .value;
+            _mapSource = MapShapeSource.asset('assets/brazil.json',
+                shapeDataField: 'sigla',
+                dataCount: _dataFinal.length, primaryValueMapper: (int index) {
+              return _dataFinal[index].pacienteEnderecoUf;
+            }, dataLabelMapper: (int index) {
+              final state = _dataFinal[index].pacienteEnderecoUf;
+              final size = _dataFinal
+                  .where((element) => element.pacienteEnderecoUf == state)
+                  .length;
+              final text = "$state\n $size";
+              return text;
+            }, shapeColorValueMapper: (int index) {
+              final size = _dataFinal
+                  .where((element) =>
+                      element.pacienteEnderecoUf ==
+                      _dataFinal[index].pacienteEnderecoUf)
+                  .length;
+              if (size <= 1000) {
+                return 10;
+              } else if (size > 1000 && size <= 5000) {
+                return 20;
+              } else if (size > 5000 && size <= 9000) {
+                return 25;
+              } else if (size > 9000 && size <= 12000) {
+                return 30;
+              } else if (size > 12000 && size <= 18000) {
+                return 35;
+              } else if (size > 18000 && size <= 30000) {
+                return 40;
+              } else if (size > 30000 && size <= 40000) {
+                return 45;
+              } else if (size > 40000 && size <= 50000) {
+                return 50;
+              } else if (size > 50000 && size <= 55000) {
+                return 55;
+              } else {
+                return 60;
+              }
+            }, shapeColorMappers: [
+              MapColorMapper(
+                  from: 0, to: 10, color: Colors.red, text: '< 1000 vacinas'),
+              MapColorMapper(
+                  from: 11,
+                  to: 20,
+                  color: Color.fromRGBO(42, 111, 55, 1.0),
+                  text: '1000 - 5000 vacinas'),
+              MapColorMapper(
+                  from: 21,
+                  to: 30,
+                  color: Color.fromRGBO(26, 148, 49, 1.0),
+                  text: '5001 - 12000 vacinas'),
+              MapColorMapper(
+                  from: 31,
+                  to: 40,
+                  color: Color.fromRGBO(89, 182, 91, 1.0),
+                  text: '12001 - 30000 vacinas'),
+              MapColorMapper(
+                  from: 41,
+                  to: 50,
+                  color: Color.fromRGBO(98, 166, 92, 1.0),
+                  text: '30001 - 50000 vacinas'),
+              MapColorMapper(
+                  from: 51,
+                  to: 60,
+                  color: Color.fromRGBO(119, 176, 108, 1.0),
+                  text: '+ 50000 vacinas'),
+            ]);
           });
         },
       )

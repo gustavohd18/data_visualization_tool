@@ -8,10 +8,7 @@ class Vaccine {
       required this.pacienteSexo,
       required this.pacienteRaca});
 
-  final String vacinaNome,
-      pacienteEnderecoUf,
-      pacienteRaca,
-      pacienteSexo;
+  final String vacinaNome, pacienteEnderecoUf, pacienteRaca, pacienteSexo;
   final DateTime vacinaDataAplicacao;
 
   factory Vaccine.vaccineFromJSON(Map<String, dynamic> json) {

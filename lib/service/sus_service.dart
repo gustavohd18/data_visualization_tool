@@ -22,7 +22,7 @@ class SUSService {
 
     final body = {'size': '10000'};
 
-    var limitRequest = 2;
+    var limitRequest = 30;
 
     var scrollId = '';
     // loop while variable
