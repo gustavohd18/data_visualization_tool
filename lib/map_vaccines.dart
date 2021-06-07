@@ -1,15 +1,12 @@
+import 'package:data_visualization/controller/data_controller.dart';
 import 'package:data_visualization/model/vaccine.dart';
 import 'package:data_visualization/widgets/seeMore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
-import "package:collection/collection.dart";
 
 class WebPlataform extends StatefulWidget {
-  const WebPlataform({required this.vaccines});
-
-  final List<Vaccine> vaccines;
+  const WebPlataform();
 
   @override
   _WebPlataformState createState() => _WebPlataformState();
@@ -20,12 +17,11 @@ class _WebPlataformState extends State<WebPlataform> {
 
   late Map<String, List<Vaccine>> _data;
   late MapShapeSource _mapSource;
-  double _value = 0.5;
 
   @override
   void initState() {
-    var newMap2 =
-        groupBy(widget.vaccines, (Vaccine obj) => obj.pacienteEnderecoUf);
+    final data = DataController().getListVaccinesPerState();
+    var newMap2 = data;
 
     _data = newMap2;
 
@@ -122,14 +118,77 @@ class _WebPlataformState extends State<WebPlataform> {
                 strokeColor: Colors.white,
                 strokeWidth: 0.5,
                 shapeTooltipBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                      onTap: () => print("Clicked"),
-                      child: SeeMore(
-                        legend:
-                            "${_data.keys.elementAt(index)}\nvacinas: ${_data.values.elementAt(index).length.toString()}",
-                        vaccines: _data.values.elementAt(index),
-                        state: "",
-                      ));
+                  final state = _data.keys.elementAt(index);
+                  final size = _data.values.elementAt(index).length;
+                  final woman = _data.values
+                      .elementAt(index)
+                      .where((element) =>
+                          element.pacienteEnderecoUf == state &&
+                          element.pacienteSexo == "F")
+                      .length;
+                  final man = _data.values
+                      .elementAt(index)
+                      .where((element) =>
+                          element.pacienteEnderecoUf == state &&
+                          element.pacienteSexo == "M")
+                      .length;
+                  final black = _data.values
+                      .elementAt(index)
+                      .where((element) =>
+                          element.pacienteEnderecoUf == state &&
+                          element.pacienteRaca == "02")
+                      .length;
+                  final blank = _data.values
+                      .elementAt(index)
+                      .where((element) =>
+                          element.pacienteEnderecoUf == state &&
+                          element.pacienteRaca == "01")
+                      .length;
+                  final pard = _data.values
+                      .elementAt(index)
+                      .where((element) =>
+                          element.pacienteEnderecoUf == state &&
+                          element.pacienteRaca == "03")
+                      .length;
+                  final yellow = _data.values
+                      .elementAt(index)
+                      .where((element) =>
+                          element.pacienteEnderecoUf == state &&
+                          element.pacienteRaca == "04")
+                      .length;
+                  final noInformation = _data.values
+                      .elementAt(index)
+                      .where((element) =>
+                          element.pacienteEnderecoUf == state &&
+                          element.pacienteRaca == "99")
+                      .length;
+
+                  final butantan = _data.values
+                      .elementAt(index)
+                      .where((element) =>
+                          element.pacienteEnderecoUf == state &&
+                          element.vacinaNome ==
+                              "Covid-19-Coronavac-Sinovac/Butantan")
+                      .length;
+                  final covishield = _data.values
+                      .elementAt(index)
+                      .where((element) =>
+                          element.pacienteEnderecoUf == state &&
+                          element.vacinaNome == "Vacina Covid-19 - Covishield")
+                      .length;
+
+                  final astraZeneca = _data.values
+                      .elementAt(index)
+                      .where((element) =>
+                          element.pacienteEnderecoUf == state &&
+                          element.vacinaNome == "Covid-19-AstraZeneca")
+                      .length;
+                  return SeeMore(
+                    legend:
+                        "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: $woman\n Homens:$man\n\n Raça:\n Branca: $blank\n Preta: $black\n Parda: $pard \nAmarela: $yellow \n Não informado: $noInformation \n\n Vacinas:\n Sinovac/Butantan:$butantan\n Covishield:$covishield\n AstraZeneca:$astraZeneca",
+                    vaccines: _data.values.elementAt(index),
+                    state: "",
+                  );
                 },
                 dataLabelSettings: MapDataLabelSettings(
                     textStyle: TextStyle(
@@ -141,16 +200,6 @@ class _WebPlataformState extends State<WebPlataform> {
           ),
         ),
       )),
-      SfSlider(
-        min: 0.0,
-        max: 10.0,
-        value: _value,
-        onChanged: (dynamic newValue) {
-          setState(() {
-            _value = newValue;
-          });
-        },
-      )
     ])));
   }
 }

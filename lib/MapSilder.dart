@@ -1,4 +1,5 @@
 import 'package:data_visualization/model/vaccine.dart';
+import 'package:data_visualization/widgets/checkList.dart';
 import 'package:data_visualization/widgets/seeMore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,10 +8,10 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import "package:collection/collection.dart";
 import 'package:intl/intl.dart';
 
-class MapSlider extends StatefulWidget {
-  const MapSlider({required this.vaccines});
+import 'controller/data_controller.dart';
 
-  final List<Vaccine> vaccines;
+class MapSlider extends StatefulWidget {
+  const MapSlider();
 
   @override
   _MapSliderState createState() => _MapSliderState();
@@ -22,14 +23,16 @@ class _MapSliderState extends State<MapSlider> {
   late Map<DateTime, List<Vaccine>> _data;
   late List<Vaccine> _dataFinal;
   late MapShapeSource _mapSource;
+  //bool ? _isChecked = false;
   DateTime _min = DateTime(2008, 01, 01);
   DateTime _max = DateTime(2018, 01, 01);
   DateTime _value = DateTime(2012, 01, 01);
 
   @override
   void initState() {
-    var newMap2 =
-        groupBy(widget.vaccines, (Vaccine obj) => obj.vacinaDataAplicacao);
+
+    final data = DataController().getListVaccinesPerDay();
+    var newMap2 = data;
 
     _min = newMap2.keys.min;
     _max = newMap2.keys.max;
@@ -119,6 +122,7 @@ class _MapSliderState extends State<MapSlider> {
             child: Column(children: [
       // TODO: FORMAT TEXT
       Text("VACINAVIZ"),
+      CheckList(),
       Expanded(
           child: Padding(
         padding: EdgeInsets.fromLTRB(10, 50, 0, 0),
