@@ -8,15 +8,15 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import "package:collection/collection.dart";
 import 'package:intl/intl.dart';
 
-class MapSlider extends StatefulWidget {
-  const MapSlider();
+class MapDays extends StatefulWidget {
+  const MapDays();
 
   @override
-  _MapSliderState createState() => _MapSliderState();
+  _MapDaysState createState() => _MapDaysState();
 }
 
-class _MapSliderState extends State<MapSlider> {
-  _MapSliderState();
+class _MapDaysState extends State<MapDays> {
+  _MapDaysState();
 
   late Map<DateTime, List<Vaccine>> _data;
   late List<Vaccine> _dataFinal;
@@ -34,8 +34,6 @@ class _MapSliderState extends State<MapSlider> {
     _min = newMap2.keys.min;
     _max = newMap2.keys.max;
     _value = newMap2.keys.min;
-
-    print("Data ${_min} max ${_max} ${_value}");
 
     _data = newMap2;
 

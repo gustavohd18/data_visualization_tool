@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 
-class WebPlataform extends StatefulWidget {
-  const WebPlataform();
+class MapTotal extends StatefulWidget {
+  const MapTotal();
 
   @override
-  _WebPlataformState createState() => _WebPlataformState();
+  _MapTotalState createState() => _MapTotalState();
 }
 
-class _WebPlataformState extends State<WebPlataform> {
-  _WebPlataformState();
+class _MapTotalState extends State<MapTotal> {
+  _MapTotalState();
 
   late Map<String, List<Vaccine>> _data;
   late MapShapeSource _mapSource;
