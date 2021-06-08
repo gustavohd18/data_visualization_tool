@@ -3,7 +3,6 @@ import 'package:data_visualization/service/sus_service.dart';
 import 'package:rx_notifier/rx_notifier.dart';
 import "package:collection/collection.dart";
 
-
 class DataController {
   static final DataController _singleton = DataController._internal();
 

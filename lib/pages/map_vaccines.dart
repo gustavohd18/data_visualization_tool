@@ -184,6 +184,8 @@ class _WebPlataformState extends State<WebPlataform> {
                           element.vacinaNome == "Covid-19-AstraZeneca")
                       .length;
                   return SeeMore(
+                    size: 550,
+                    height: 500,
                     legend:
                         "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: $woman\n Homens:$man\n\n Raça:\n Branca: $blank\n Preta: $black\n Parda: $pard \nAmarela: $yellow \n Não informado: $noInformation \n\n Vacinas:\n Sinovac/Butantan:$butantan\n Covishield:$covishield\n AstraZeneca:$astraZeneca",
                     vaccines: _data.values.elementAt(index),

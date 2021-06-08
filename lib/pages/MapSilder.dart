@@ -1,3 +1,4 @@
+import 'package:data_visualization/controller/data_controller.dart';
 import 'package:data_visualization/model/vaccine.dart';
 import 'package:data_visualization/widgets/checkList.dart';
 import 'package:data_visualization/widgets/seeMore.dart';
@@ -7,8 +8,6 @@ import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import "package:collection/collection.dart";
 import 'package:intl/intl.dart';
-
-import 'controller/data_controller.dart';
 
 class MapSlider extends StatefulWidget {
   const MapSlider();
@@ -30,7 +29,6 @@ class _MapSliderState extends State<MapSlider> {
 
   @override
   void initState() {
-
     final data = DataController().getListVaccinesPerDay();
     var newMap2 = data;
 
@@ -210,6 +208,8 @@ class _MapSliderState extends State<MapSlider> {
                           element.vacinaNome == "Covid-19-AstraZeneca")
                       .length;
                   return SeeMore(
+                    size: 550,
+                    height: 500,
                     legend:
                         "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: $woman\n Homens:$man \n\n Raça:\n Branca: $blank\n Preta: $black\n Parda: $pard \n Amarela: $yellow \n Não informado: $noInformation \n\n Vacinas:\n Sinovac/Butantan:$butantan\n Covishield:$covishield\n AstraZeneca:$astraZeneca",
                     vaccines: _dataFinal,
