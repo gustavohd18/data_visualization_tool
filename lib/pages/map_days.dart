@@ -204,7 +204,7 @@ class _MapDaysState extends State<MapDays> {
                     size: 550,
                     height: 500,
                     legend:
-                        "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: $woman\n Homens:$man \n\n Raça:\n Branca: $blank\n Preta: $black\n Parda: $pard \n Amarela: $yellow \n Não informado: $noInformation \n\n Vacinas:\n Sinovac/Butantan:$butantan\n Covishield:$covishield\n AstraZeneca:$astraZeneca",
+                        "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: $woman\n Homens:$man \n\n Raça:\n Branca: $blank\n Preta: $black\n Parda: $pard \n Amarela: $yellow \n Não informado: $noInformation \n\n Vacinas:\n Sinovac/Butantan:$butantan\n Covishield:$covishield\n Pharma/Pfizer:$astraZeneca",
                     vaccines: _dataFinal,
                     state: state,
                   );

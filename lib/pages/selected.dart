@@ -1,6 +1,7 @@
 import 'package:data_visualization/controller/data_controller.dart';
 import 'package:data_visualization/pages/map_days.dart';
 import 'package:data_visualization/pages/map_genre.dart';
+import 'package:data_visualization/pages/map_name_vaccine.dart';
 import 'package:data_visualization/pages/map_rac.dart';
 import 'package:data_visualization/pages/map_vaccines.dart';
 import 'package:data_visualization/widgets/checkList.dart';
@@ -58,6 +59,13 @@ class MapData extends StatelessWidget {
         return MapRac(rac: "03");
       case 8:
         return MapRac(rac: "04");
+      case 9:
+        return MapVaccine(name: "Covid-19-Coronavac-Sinovac/Butantan");
+      case 10:
+        return MapVaccine(name: "Vacina Covid-19 - Covishield");
+      case 11:
+        return MapVaccine(
+            name: "Vacina covid-19 - BNT162b2 - BioNTech/Fosun Pharma/Pfizer");
       default:
         return MapDays();
     }

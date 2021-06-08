@@ -42,6 +42,10 @@ class DataController {
     return groupBy(vaccines.value, (Vaccine obj) => obj.pacienteSexo);
   }
 
+  Map<String, List<Vaccine>> getListVaccinesPerName() {
+    return groupBy(vaccines.value, (Vaccine obj) => obj.vacinaNome);
+  }
+
   Map<String, List<Vaccine>> getListVaccinesPerRac() {
     return groupBy(vaccines.value, (Vaccine obj) => obj.pacienteRaca);
   }

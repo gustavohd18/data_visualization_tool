@@ -17,6 +17,9 @@ class _CheckListState extends State<CheckList> {
   bool? _isCheckedAllBlank = false;
   bool? _isCheckedAllYellow = false;
   bool? _isCheckedAllPard = false;
+  bool? _isCheckedBu = false;
+  bool? _isCheckedCovishield = false;
+  bool? _isCheckedAstraZeneca = false;
 
   void setType() {
     if (_isCheckedAllData == true) {
@@ -27,6 +30,9 @@ class _CheckListState extends State<CheckList> {
       _isCheckedAllBlank = false;
       _isCheckedAllYellow = false;
       _isCheckedAllPard = false;
+      _isCheckedBu = false;
+      _isCheckedCovishield = false;
+      _isCheckedAstraZeneca = false;
       DataController().setIsAllData(1);
     } else if (_isCheckedDataPerDay == true) {
       _isCheckedAllData = false;
@@ -36,6 +42,9 @@ class _CheckListState extends State<CheckList> {
       _isCheckedAllBlank = false;
       _isCheckedAllYellow = false;
       _isCheckedAllPard = false;
+      _isCheckedBu = false;
+      _isCheckedCovishield = false;
+      _isCheckedAstraZeneca = false;
       DataController().setIsAllData(2);
     } else if (_isCheckedGenreMan == true) {
       _isCheckedAllData = false;
@@ -45,6 +54,9 @@ class _CheckListState extends State<CheckList> {
       _isCheckedAllBlank = false;
       _isCheckedAllYellow = false;
       _isCheckedAllPard = false;
+      _isCheckedBu = false;
+      _isCheckedCovishield = false;
+      _isCheckedAstraZeneca = false;
       DataController().setIsAllData(3);
     } else if (_isCheckedGenreWoman == true) {
       _isCheckedAllData = false;
@@ -54,6 +66,9 @@ class _CheckListState extends State<CheckList> {
       _isCheckedAllBlank = false;
       _isCheckedAllYellow = false;
       _isCheckedAllPard = false;
+      _isCheckedBu = false;
+      _isCheckedCovishield = false;
+      _isCheckedAstraZeneca = false;
       DataController().setIsAllData(4);
     } else if (_isCheckedAllBlank == true) {
       _isCheckedAllData = false;
@@ -63,6 +78,9 @@ class _CheckListState extends State<CheckList> {
       _isCheckedGenreWoman = false;
       _isCheckedAllYellow = false;
       _isCheckedAllPard = false;
+      _isCheckedBu = false;
+      _isCheckedCovishield = false;
+      _isCheckedAstraZeneca = false;
       DataController().setIsAllData(5);
     } else if (_isCheckedAllBlack == true) {
       _isCheckedAllData = false;
@@ -72,6 +90,9 @@ class _CheckListState extends State<CheckList> {
       _isCheckedGenreWoman = false;
       _isCheckedAllYellow = false;
       _isCheckedAllPard = false;
+      _isCheckedBu = false;
+      _isCheckedCovishield = false;
+      _isCheckedAstraZeneca = false;
       DataController().setIsAllData(6);
     } else if (_isCheckedAllPard == true) {
       _isCheckedAllData = false;
@@ -81,6 +102,9 @@ class _CheckListState extends State<CheckList> {
       _isCheckedGenreWoman = false;
       _isCheckedAllYellow = false;
       _isCheckedAllBlack = false;
+      _isCheckedBu = false;
+      _isCheckedCovishield = false;
+      _isCheckedAstraZeneca = false;
       DataController().setIsAllData(7);
     } else if (_isCheckedAllYellow == true) {
       _isCheckedAllData = false;
@@ -90,7 +114,46 @@ class _CheckListState extends State<CheckList> {
       _isCheckedGenreWoman = false;
       _isCheckedAllBlack = false;
       _isCheckedAllPard = false;
+      _isCheckedBu = false;
+      _isCheckedCovishield = false;
+      _isCheckedAstraZeneca = false;
       DataController().setIsAllData(8);
+    } else if (_isCheckedBu == true) {
+      _isCheckedAllData = false;
+      _isCheckedGenreMan = false;
+      _isCheckedDataPerDay = false;
+      _isCheckedAllBlank = false;
+      _isCheckedGenreWoman = false;
+      _isCheckedAllBlack = false;
+      _isCheckedAllPard = false;
+      _isCheckedAllYellow = false;
+      _isCheckedCovishield = false;
+      _isCheckedAstraZeneca = false;
+      DataController().setIsAllData(9);
+    } else if (_isCheckedCovishield == true) {
+      _isCheckedAllData = false;
+      _isCheckedGenreMan = false;
+      _isCheckedDataPerDay = false;
+      _isCheckedAllBlank = false;
+      _isCheckedGenreWoman = false;
+      _isCheckedAllBlack = false;
+      _isCheckedAllPard = false;
+      _isCheckedAllYellow = false;
+      _isCheckedBu = false;
+      _isCheckedAstraZeneca = false;
+      DataController().setIsAllData(10);
+    } else if (_isCheckedAstraZeneca == true) {
+      _isCheckedAllData = false;
+      _isCheckedGenreMan = false;
+      _isCheckedDataPerDay = false;
+      _isCheckedAllBlank = false;
+      _isCheckedGenreWoman = false;
+      _isCheckedAllBlack = false;
+      _isCheckedAllPard = false;
+      _isCheckedAllYellow = false;
+      _isCheckedBu = false;
+      _isCheckedCovishield = false;
+      DataController().setIsAllData(11);
     }
   }
 
@@ -227,6 +290,54 @@ class _CheckListState extends State<CheckList> {
                     onChanged: (bool? value) {
                       setState(() {
                         _isCheckedAllYellow = value;
+                        setType();
+                      });
+                    },
+                  ),
+                ),
+                Container(
+                  width: 150,
+                  height: 60,
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  child: CheckboxListTile(
+                    title: const Text('Sinovac/Butantan'),
+                    value: _isCheckedBu,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _isCheckedBu = value;
+                        setType();
+                      });
+                    },
+                  ),
+                ),
+                Container(
+                  width: 150,
+                  height: 60,
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  child: CheckboxListTile(
+                    title: const Text('Covishield'),
+                    value: _isCheckedCovishield,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _isCheckedCovishield = value;
+                        setType();
+                      });
+                    },
+                  ),
+                ),
+                Container(
+                  width: 150,
+                  height: 60,
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  child: CheckboxListTile(
+                    title: const Text('Pfizer'),
+                    value: _isCheckedAstraZeneca,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _isCheckedAstraZeneca = value;
                         setType();
                       });
                     },
