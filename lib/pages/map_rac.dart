@@ -109,55 +109,48 @@ class _MapRacState extends State<MapRac> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-            child: Column(children: [
-      // TODO: FORMAT TEXT
-      Text("VACINAVIZ"),
-      CheckList(),
-      Expanded(
-          child: Padding(
-        padding: EdgeInsets.fromLTRB(10, 50, 0, 0),
-        child: Center(
-          child: SfMaps(
-            layers: <MapShapeLayer>[
-              MapShapeLayer(
-                source: _mapSource,
-                showDataLabels: true,
-                legend: MapLegend(MapElement.shape),
-                tooltipSettings: MapTooltipSettings(
-                    color: Colors.grey[700],
-                    strokeColor: Colors.white,
-                    strokeWidth: 2),
-                strokeColor: Colors.white,
-                strokeWidth: 0.5,
-                shapeTooltipBuilder: (BuildContext context, int index) {
-                  final state = _dataFinal[index].pacienteEnderecoUf;
-                  final size = _dataFinal
-                      .where((element) =>
-                          element.pacienteEnderecoUf ==
-                              _dataFinal[index].pacienteEnderecoUf &&
-                          element.pacienteRaca == widget.rac)
-                      .length;
+    return Expanded(
+        child: Padding(
+      padding: EdgeInsets.fromLTRB(10, 50, 0, 0),
+      child: Center(
+        child: SfMaps(
+          layers: <MapShapeLayer>[
+            MapShapeLayer(
+              source: _mapSource,
+              showDataLabels: true,
+              legend: MapLegend(MapElement.shape),
+              tooltipSettings: MapTooltipSettings(
+                  color: Colors.grey[700],
+                  strokeColor: Colors.white,
+                  strokeWidth: 2),
+              strokeColor: Colors.white,
+              strokeWidth: 0.5,
+              shapeTooltipBuilder: (BuildContext context, int index) {
+                final state = _dataFinal[index].pacienteEnderecoUf;
+                final size = _dataFinal
+                    .where((element) =>
+                        element.pacienteEnderecoUf ==
+                            _dataFinal[index].pacienteEnderecoUf &&
+                        element.pacienteRaca == widget.rac)
+                    .length;
 
-                  return SeeMore(
-                    size: 150,
-                    height: 180,
-                    legend: "$state\n\n total vacinas:$size\n\n",
-                    vaccines: _dataFinal,
-                    state: state,
-                  );
-                },
-                dataLabelSettings: MapDataLabelSettings(
-                    textStyle: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14)),
-              ),
-            ],
-          ),
+                return SeeMore(
+                  size: 150,
+                  height: 180,
+                  legend: "$state\n\n total vacinas:$size\n\n",
+                  vaccines: _dataFinal,
+                  state: state,
+                );
+              },
+              dataLabelSettings: MapDataLabelSettings(
+                  textStyle: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14)),
+            ),
+          ],
         ),
-      )),
-    ])));
+      ),
+    ));
   }
 }

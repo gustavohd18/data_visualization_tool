@@ -50,9 +50,6 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - world_map.json
-    - australia.json
-    - south_america.json
     - rs.json
     - brazil.json
 

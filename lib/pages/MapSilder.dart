@@ -115,12 +115,8 @@ class _MapSliderState extends State<MapSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-            child: Column(children: [
-      // TODO: FORMAT TEXT
-      Text("VACINAVIZ"),
-      CheckList(),
+    return Expanded(
+        child: Column(children: [
       Expanded(
           child: Padding(
         padding: EdgeInsets.fromLTRB(10, 50, 0, 0),
@@ -314,6 +310,6 @@ class _MapSliderState extends State<MapSlider> {
           });
         },
       )
-    ])));
+    ]));
   }
 }

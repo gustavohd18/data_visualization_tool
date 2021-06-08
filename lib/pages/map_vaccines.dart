@@ -96,112 +96,106 @@ class _WebPlataformState extends State<WebPlataform> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-            child: Column(children: [
-      // TODO: FORMAT TEXT
-      Text("VACINAVIZ"),
-      Expanded(
-          child: Padding(
-        padding: EdgeInsets.fromLTRB(10, 50, 0, 0),
-        child: Center(
-          child: SfMaps(
-            layers: <MapShapeLayer>[
-              MapShapeLayer(
-                source: _mapSource,
-                showDataLabels: true,
-                legend: MapLegend(MapElement.shape),
-                tooltipSettings: MapTooltipSettings(
-                    color: Colors.grey[700],
-                    strokeColor: Colors.white,
-                    strokeWidth: 2),
-                strokeColor: Colors.white,
-                strokeWidth: 0.5,
-                shapeTooltipBuilder: (BuildContext context, int index) {
-                  final state = _data.keys.elementAt(index);
-                  final size = _data.values.elementAt(index).length;
-                  final woman = _data.values
-                      .elementAt(index)
-                      .where((element) =>
-                          element.pacienteEnderecoUf == state &&
-                          element.pacienteSexo == "F")
-                      .length;
-                  final man = _data.values
-                      .elementAt(index)
-                      .where((element) =>
-                          element.pacienteEnderecoUf == state &&
-                          element.pacienteSexo == "M")
-                      .length;
-                  final black = _data.values
-                      .elementAt(index)
-                      .where((element) =>
-                          element.pacienteEnderecoUf == state &&
-                          element.pacienteRaca == "02")
-                      .length;
-                  final blank = _data.values
-                      .elementAt(index)
-                      .where((element) =>
-                          element.pacienteEnderecoUf == state &&
-                          element.pacienteRaca == "01")
-                      .length;
-                  final pard = _data.values
-                      .elementAt(index)
-                      .where((element) =>
-                          element.pacienteEnderecoUf == state &&
-                          element.pacienteRaca == "03")
-                      .length;
-                  final yellow = _data.values
-                      .elementAt(index)
-                      .where((element) =>
-                          element.pacienteEnderecoUf == state &&
-                          element.pacienteRaca == "04")
-                      .length;
-                  final noInformation = _data.values
-                      .elementAt(index)
-                      .where((element) =>
-                          element.pacienteEnderecoUf == state &&
-                          element.pacienteRaca == "99")
-                      .length;
+    return Expanded(
+        child: Padding(
+      padding: EdgeInsets.fromLTRB(10, 50, 0, 0),
+      child: Center(
+        child: SfMaps(
+          layers: <MapShapeLayer>[
+            MapShapeLayer(
+              source: _mapSource,
+              showDataLabels: true,
+              legend: MapLegend(MapElement.shape),
+              tooltipSettings: MapTooltipSettings(
+                  color: Colors.grey[700],
+                  strokeColor: Colors.white,
+                  strokeWidth: 2),
+              strokeColor: Colors.white,
+              strokeWidth: 0.5,
+              shapeTooltipBuilder: (BuildContext context, int index) {
+                final state = _data.keys.elementAt(index);
+                final size = _data.values.elementAt(index).length;
+                final woman = _data.values
+                    .elementAt(index)
+                    .where((element) =>
+                        element.pacienteEnderecoUf == state &&
+                        element.pacienteSexo == "F")
+                    .length;
+                final man = _data.values
+                    .elementAt(index)
+                    .where((element) =>
+                        element.pacienteEnderecoUf == state &&
+                        element.pacienteSexo == "M")
+                    .length;
+                final black = _data.values
+                    .elementAt(index)
+                    .where((element) =>
+                        element.pacienteEnderecoUf == state &&
+                        element.pacienteRaca == "02")
+                    .length;
+                final blank = _data.values
+                    .elementAt(index)
+                    .where((element) =>
+                        element.pacienteEnderecoUf == state &&
+                        element.pacienteRaca == "01")
+                    .length;
+                final pard = _data.values
+                    .elementAt(index)
+                    .where((element) =>
+                        element.pacienteEnderecoUf == state &&
+                        element.pacienteRaca == "03")
+                    .length;
+                final yellow = _data.values
+                    .elementAt(index)
+                    .where((element) =>
+                        element.pacienteEnderecoUf == state &&
+                        element.pacienteRaca == "04")
+                    .length;
+                final noInformation = _data.values
+                    .elementAt(index)
+                    .where((element) =>
+                        element.pacienteEnderecoUf == state &&
+                        element.pacienteRaca == "99")
+                    .length;
 
-                  final butantan = _data.values
-                      .elementAt(index)
-                      .where((element) =>
-                          element.pacienteEnderecoUf == state &&
-                          element.vacinaNome ==
-                              "Covid-19-Coronavac-Sinovac/Butantan")
-                      .length;
-                  final covishield = _data.values
-                      .elementAt(index)
-                      .where((element) =>
-                          element.pacienteEnderecoUf == state &&
-                          element.vacinaNome == "Vacina Covid-19 - Covishield")
-                      .length;
+                final butantan = _data.values
+                    .elementAt(index)
+                    .where((element) =>
+                        element.pacienteEnderecoUf == state &&
+                        element.vacinaNome ==
+                            "Covid-19-Coronavac-Sinovac/Butantan")
+                    .length;
+                final covishield = _data.values
+                    .elementAt(index)
+                    .where((element) =>
+                        element.pacienteEnderecoUf == state &&
+                        element.vacinaNome == "Vacina Covid-19 - Covishield")
+                    .length;
 
-                  final astraZeneca = _data.values
-                      .elementAt(index)
-                      .where((element) =>
-                          element.pacienteEnderecoUf == state &&
-                          element.vacinaNome == "Covid-19-AstraZeneca")
-                      .length;
-                  return SeeMore(
-                    size: 550,
-                    height: 500,
-                    legend:
-                        "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: $woman\n Homens:$man\n\n Raça:\n Branca: $blank\n Preta: $black\n Parda: $pard \nAmarela: $yellow \n Não informado: $noInformation \n\n Vacinas:\n Sinovac/Butantan:$butantan\n Covishield:$covishield\n AstraZeneca:$astraZeneca",
-                    vaccines: _data.values.elementAt(index),
-                    state: "",
-                  );
-                },
-                dataLabelSettings: MapDataLabelSettings(
-                    textStyle: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14)),
-              ),
-            ],
-          ),
+                final astraZeneca = _data.values
+                    .elementAt(index)
+                    .where((element) =>
+                        element.pacienteEnderecoUf == state &&
+                        element.vacinaNome == "Covid-19-AstraZeneca")
+                    .length;
+                return SeeMore(
+                  size: 550,
+                  height: 500,
+                  legend:
+                      "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: $woman\n Homens:$man\n\n Raça:\n Branca: $blank\n Preta: $black\n Parda: $pard \nAmarela: $yellow \n Não informado: $noInformation \n\n Vacinas:\n Sinovac/Butantan:$butantan\n Covishield:$covishield\n AstraZeneca:$astraZeneca",
+                  vaccines: _data.values.elementAt(index),
+                  state: "",
+                );
+              },
+              dataLabelSettings: MapDataLabelSettings(
+                  textStyle: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14)),
+            ),
+          ],
         ),
-      )),
-    ])));
+      ),
+    ));
   }
 }
