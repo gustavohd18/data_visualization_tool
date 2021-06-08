@@ -1,13 +1,9 @@
 import 'package:data_visualization/controller/data_controller.dart';
 import 'package:data_visualization/model/vaccine.dart';
-import 'package:data_visualization/widgets/checkList.dart';
 import 'package:data_visualization/widgets/seeMore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
-import "package:collection/collection.dart";
-import 'package:intl/intl.dart';
 
 class MapRac extends StatefulWidget {
   const MapRac({required this.rac});

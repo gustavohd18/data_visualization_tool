@@ -1,6 +1,5 @@
 import 'package:data_visualization/controller/data_controller.dart';
 import 'package:data_visualization/model/vaccine.dart';
-import 'package:data_visualization/widgets/checkList.dart';
 import 'package:data_visualization/widgets/seeMore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

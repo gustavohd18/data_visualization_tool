@@ -1,13 +1,9 @@
 import 'package:data_visualization/controller/data_controller.dart';
 import 'package:data_visualization/model/vaccine.dart';
-import 'package:data_visualization/widgets/checkList.dart';
 import 'package:data_visualization/widgets/seeMore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
-import "package:collection/collection.dart";
-import 'package:intl/intl.dart';
 
 class MapGenre extends StatefulWidget {
   const MapGenre({required this.genre});
@@ -30,7 +26,6 @@ class _MapGenreState extends State<MapGenre> {
 
     _data = newMap2;
 
-    // genre for parameter maybe
     _dataFinal = _data.entries
         .firstWhere((element) => element.key == widget.genre)
         .value;
