@@ -1,5 +1,7 @@
 import 'package:data_visualization/controller/data_controller.dart';
 import 'package:data_visualization/pages/map_days.dart';
+import 'package:data_visualization/pages/map_genre.dart';
+import 'package:data_visualization/pages/map_rac.dart';
 import 'package:data_visualization/pages/map_vaccines.dart';
 import 'package:data_visualization/widgets/checkList.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +44,20 @@ class MapData extends StatelessWidget {
     switch (type) {
       case 1:
         return MapTotal();
+      case 2:
+        return MapDays();
+      case 3:
+        return MapGenre(genre: "M");
+      case 4:
+        return MapGenre(genre: "F");
+      case 5:
+        return MapRac(rac: "01");
+      case 6:
+        return MapRac(rac: "02");
+      case 7:
+        return MapRac(rac: "03");
+      case 8:
+        return MapRac(rac: "04");
       default:
         return MapDays();
     }

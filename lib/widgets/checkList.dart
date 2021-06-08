@@ -37,6 +37,60 @@ class _CheckListState extends State<CheckList> {
       _isCheckedAllYellow = false;
       _isCheckedAllPard = false;
       DataController().setIsAllData(2);
+    } else if (_isCheckedGenreMan == true) {
+      _isCheckedAllData = false;
+      _isCheckedDataPerDay = false;
+      _isCheckedGenreWoman = false;
+      _isCheckedAllBlack = false;
+      _isCheckedAllBlank = false;
+      _isCheckedAllYellow = false;
+      _isCheckedAllPard = false;
+      DataController().setIsAllData(3);
+    } else if (_isCheckedGenreWoman == true) {
+      _isCheckedAllData = false;
+      _isCheckedGenreMan = false;
+      _isCheckedDataPerDay = false;
+      _isCheckedAllBlack = false;
+      _isCheckedAllBlank = false;
+      _isCheckedAllYellow = false;
+      _isCheckedAllPard = false;
+      DataController().setIsAllData(4);
+    } else if (_isCheckedAllBlank == true) {
+      _isCheckedAllData = false;
+      _isCheckedGenreMan = false;
+      _isCheckedDataPerDay = false;
+      _isCheckedAllBlack = false;
+      _isCheckedGenreWoman = false;
+      _isCheckedAllYellow = false;
+      _isCheckedAllPard = false;
+      DataController().setIsAllData(5);
+    } else if (_isCheckedAllBlack == true) {
+      _isCheckedAllData = false;
+      _isCheckedGenreMan = false;
+      _isCheckedDataPerDay = false;
+      _isCheckedAllBlank = false;
+      _isCheckedGenreWoman = false;
+      _isCheckedAllYellow = false;
+      _isCheckedAllPard = false;
+      DataController().setIsAllData(6);
+    } else if (_isCheckedAllPard == true) {
+      _isCheckedAllData = false;
+      _isCheckedGenreMan = false;
+      _isCheckedDataPerDay = false;
+      _isCheckedAllBlank = false;
+      _isCheckedGenreWoman = false;
+      _isCheckedAllYellow = false;
+      _isCheckedAllBlack = false;
+      DataController().setIsAllData(7);
+    } else if (_isCheckedAllYellow == true) {
+      _isCheckedAllData = false;
+      _isCheckedGenreMan = false;
+      _isCheckedDataPerDay = false;
+      _isCheckedAllBlank = false;
+      _isCheckedGenreWoman = false;
+      _isCheckedAllBlack = false;
+      _isCheckedAllPard = false;
+      DataController().setIsAllData(8);
     }
   }
 
@@ -93,6 +147,7 @@ class _CheckListState extends State<CheckList> {
                     onChanged: (bool? value) {
                       setState(() {
                         _isCheckedGenreMan = value;
+                        setType();
                       });
                     },
                   ),
@@ -108,6 +163,7 @@ class _CheckListState extends State<CheckList> {
                     onChanged: (bool? value) {
                       setState(() {
                         _isCheckedGenreWoman = value;
+                        setType();
                       });
                     },
                   ),
@@ -123,6 +179,7 @@ class _CheckListState extends State<CheckList> {
                     onChanged: (bool? value) {
                       setState(() {
                         _isCheckedAllBlank = value;
+                        setType();
                       });
                     },
                   ),
@@ -138,6 +195,7 @@ class _CheckListState extends State<CheckList> {
                     onChanged: (bool? value) {
                       setState(() {
                         _isCheckedAllBlack = value;
+                        setType();
                       });
                     },
                   ),
@@ -153,6 +211,7 @@ class _CheckListState extends State<CheckList> {
                     onChanged: (bool? value) {
                       setState(() {
                         _isCheckedAllPard = value;
+                        setType();
                       });
                     },
                   ),
@@ -168,6 +227,7 @@ class _CheckListState extends State<CheckList> {
                     onChanged: (bool? value) {
                       setState(() {
                         _isCheckedAllYellow = value;
+                        setType();
                       });
                     },
                   ),
