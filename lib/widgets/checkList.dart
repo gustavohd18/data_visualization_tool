@@ -1,3 +1,4 @@
+import 'package:data_visualization/controller/data_controller.dart';
 import 'package:flutter/material.dart';
 
 class CheckList extends StatefulWidget {
@@ -8,7 +9,37 @@ class CheckList extends StatefulWidget {
 }
 
 class _CheckListState extends State<CheckList> {
-  bool? _isChecked = false;
+  bool? _isCheckedAllData = false;
+  bool? _isCheckedDataPerDay = false;
+  bool? _isCheckedGenreMan = false;
+  bool? _isCheckedGenreWoman = false;
+  bool? _isCheckedAllBlack = false;
+  bool? _isCheckedAllBlank = false;
+  bool? _isCheckedAllYellow = false;
+  bool? _isCheckedAllPard = false;
+
+  void setType() {
+    if (_isCheckedAllData == true) {
+      _isCheckedDataPerDay = false;
+      _isCheckedGenreMan = false;
+      _isCheckedGenreWoman = false;
+      _isCheckedAllBlack = false;
+      _isCheckedAllBlank = false;
+      _isCheckedAllYellow = false;
+      _isCheckedAllPard = false;
+      DataController().setIsAllData(1);
+    } else if (_isCheckedDataPerDay == true) {
+      _isCheckedAllData = false;
+      _isCheckedGenreMan = false;
+      _isCheckedGenreWoman = false;
+      _isCheckedAllBlack = false;
+      _isCheckedAllBlank = false;
+      _isCheckedAllYellow = false;
+      _isCheckedAllPard = false;
+      DataController().setIsAllData(2);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,10 +57,11 @@ class _CheckListState extends State<CheckList> {
                       BoxDecoration(border: Border.all(color: Colors.black)),
                   child: CheckboxListTile(
                     title: const Text('Total dias'),
-                    value: _isChecked,
+                    value: _isCheckedAllData,
                     onChanged: (bool? value) {
                       setState(() {
-                        _isChecked = value;
+                        _isCheckedAllData = value;
+                        setType();
                       });
                     },
                   ),
@@ -41,10 +73,11 @@ class _CheckListState extends State<CheckList> {
                       BoxDecoration(border: Border.all(color: Colors.black)),
                   child: CheckboxListTile(
                     title: const Text('Por dias'),
-                    value: _isChecked,
+                    value: _isCheckedDataPerDay,
                     onChanged: (bool? value) {
                       setState(() {
-                        _isChecked = value;
+                        _isCheckedDataPerDay = value;
+                        setType();
                       });
                     },
                   ),
@@ -56,10 +89,10 @@ class _CheckListState extends State<CheckList> {
                       BoxDecoration(border: Border.all(color: Colors.black)),
                   child: CheckboxListTile(
                     title: const Text('Masculino'),
-                    value: _isChecked,
+                    value: _isCheckedGenreMan,
                     onChanged: (bool? value) {
                       setState(() {
-                        _isChecked = value;
+                        _isCheckedGenreMan = value;
                       });
                     },
                   ),
@@ -71,10 +104,10 @@ class _CheckListState extends State<CheckList> {
                       BoxDecoration(border: Border.all(color: Colors.black)),
                   child: CheckboxListTile(
                     title: const Text('Feminino'),
-                    value: _isChecked,
+                    value: _isCheckedGenreWoman,
                     onChanged: (bool? value) {
                       setState(() {
-                        _isChecked = value;
+                        _isCheckedGenreWoman = value;
                       });
                     },
                   ),
@@ -86,10 +119,10 @@ class _CheckListState extends State<CheckList> {
                       BoxDecoration(border: Border.all(color: Colors.black)),
                   child: CheckboxListTile(
                     title: const Text('Branca'),
-                    value: _isChecked,
+                    value: _isCheckedAllBlank,
                     onChanged: (bool? value) {
                       setState(() {
-                        _isChecked = value;
+                        _isCheckedAllBlank = value;
                       });
                     },
                   ),
@@ -101,10 +134,10 @@ class _CheckListState extends State<CheckList> {
                       BoxDecoration(border: Border.all(color: Colors.black)),
                   child: CheckboxListTile(
                     title: const Text('Preta'),
-                    value: _isChecked,
+                    value: _isCheckedAllBlack,
                     onChanged: (bool? value) {
                       setState(() {
-                        _isChecked = value;
+                        _isCheckedAllBlack = value;
                       });
                     },
                   ),
@@ -116,10 +149,10 @@ class _CheckListState extends State<CheckList> {
                       BoxDecoration(border: Border.all(color: Colors.black)),
                   child: CheckboxListTile(
                     title: const Text('Parda'),
-                    value: _isChecked,
+                    value: _isCheckedAllPard,
                     onChanged: (bool? value) {
                       setState(() {
-                        _isChecked = value;
+                        _isCheckedAllPard = value;
                       });
                     },
                   ),
@@ -131,10 +164,10 @@ class _CheckListState extends State<CheckList> {
                       BoxDecoration(border: Border.all(color: Colors.black)),
                   child: CheckboxListTile(
                     title: const Text('Amarela'),
-                    value: _isChecked,
+                    value: _isCheckedAllYellow,
                     onChanged: (bool? value) {
                       setState(() {
-                        _isChecked = value;
+                        _isCheckedAllYellow = value;
                       });
                     },
                   ),

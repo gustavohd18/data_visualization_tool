@@ -12,13 +12,13 @@ class DataController {
 
   final _services = SUSService();
 
-  final isAllData = RxNotifier<bool>(false);
+  final isAllData = RxNotifier<int>(1);
 
   final isSelectedData = RxNotifier<bool>(false);
 
   final vaccines = RxNotifier<List<Vaccine>>([]);
 
-  setIsAllData(bool value) {
+  setIsAllData(int value) {
     isAllData.value = value;
   }
 
