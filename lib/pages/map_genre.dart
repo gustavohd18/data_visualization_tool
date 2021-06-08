@@ -1,50 +1,60 @@
+import 'package:data_visualization/controller/data_controller.dart';
 import 'package:data_visualization/model/vaccine.dart';
+import 'package:data_visualization/widgets/checkList.dart';
 import 'package:data_visualization/widgets/seeMore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import "package:collection/collection.dart";
+import 'package:intl/intl.dart';
 
-class WebPlataform extends StatefulWidget {
-  const WebPlataform({required this.vaccines});
+class MapGenre extends StatefulWidget {
+  const MapGenre({required this.genre});
 
-  final List<Vaccine> vaccines;
+  final String genre;
 
   @override
-  _WebPlataformState createState() => _WebPlataformState();
+  _MapGenreState createState() => _MapGenreState();
 }
 
-class _WebPlataformState extends State<WebPlataform> {
-  _WebPlataformState();
-
+class _MapGenreState extends State<MapGenre> {
   late Map<String, List<Vaccine>> _data;
+  late List<Vaccine> _dataFinal;
   late MapShapeSource _mapSource;
-  double _value = 0.5;
 
   @override
   void initState() {
-    var newMap2 =
-        groupBy(widget.vaccines, (Vaccine obj) => obj.pacienteEnderecoUf);
+    final data = DataController().getListVaccinesPerGenre();
+    var newMap2 = data;
 
     _data = newMap2;
 
+    // genre for parameter maybe
+    _dataFinal = _data.entries
+        .firstWhere((element) => element.key == widget.genre)
+        .value;
+
     _mapSource = MapShapeSource.asset('assets/brazil.json',
         shapeDataField: 'sigla',
-        dataCount: _data.length, primaryValueMapper: (int index) {
-      var keys = _data.keys;
-      return keys.elementAt(index);
+        dataCount: _dataFinal.length, primaryValueMapper: (int index) {
+      return _dataFinal[index].pacienteEnderecoUf;
     }, dataLabelMapper: (int index) {
-      var values = _data.values;
-      final List<Vaccine> list = values.elementAt(index);
-      final keys = _data.keys;
-      final state = keys.elementAt(index);
-      final text = "$state\n ${list.length.toString()}";
+      final state = _dataFinal[index].pacienteEnderecoUf;
+      final size = _dataFinal
+          .where((element) =>
+              element.pacienteEnderecoUf == state &&
+              element.pacienteSexo == widget.genre)
+          .length;
+      final text = "$state\n $size";
       return text;
     }, shapeColorValueMapper: (int index) {
-      var values = _data.values;
-      final List<Vaccine> list = values.elementAt(index);
-      final size = list.length;
+      final size = _dataFinal
+          .where((element) =>
+              element.pacienteEnderecoUf ==
+                  _dataFinal[index].pacienteEnderecoUf &&
+              element.pacienteSexo == widget.genre)
+          .length;
       if (size <= 1000) {
         return 10;
       } else if (size > 1000 && size <= 5000) {
@@ -105,6 +115,7 @@ class _WebPlataformState extends State<WebPlataform> {
             child: Column(children: [
       // TODO: FORMAT TEXT
       Text("VACINAVIZ"),
+      CheckList(),
       Expanded(
           child: Padding(
         padding: EdgeInsets.fromLTRB(10, 50, 0, 0),
@@ -122,14 +133,21 @@ class _WebPlataformState extends State<WebPlataform> {
                 strokeColor: Colors.white,
                 strokeWidth: 0.5,
                 shapeTooltipBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                      onTap: () => print("Clicked"),
-                      child: SeeMore(
-                        legend:
-                            "${_data.keys.elementAt(index)}\nvacinas: ${_data.values.elementAt(index).length.toString()}",
-                        vaccines: _data.values.elementAt(index),
-                        state: "",
-                      ));
+                  final state = _dataFinal[index].pacienteEnderecoUf;
+                  final size = _dataFinal
+                      .where((element) =>
+                          element.pacienteEnderecoUf ==
+                              _dataFinal[index].pacienteEnderecoUf &&
+                          element.pacienteSexo == widget.genre)
+                      .length;
+
+                  return SeeMore(
+                    size: 150,
+                    height: 180,
+                    legend: "$state\n\n total vacinas:$size\n\n",
+                    vaccines: _dataFinal,
+                    state: state,
+                  );
                 },
                 dataLabelSettings: MapDataLabelSettings(
                     textStyle: TextStyle(
@@ -141,16 +159,6 @@ class _WebPlataformState extends State<WebPlataform> {
           ),
         ),
       )),
-      SfSlider(
-        min: 0.0,
-        max: 10.0,
-        value: _value,
-        onChanged: (dynamic newValue) {
-          setState(() {
-            _value = newValue;
-          });
-        },
-      )
     ])));
   }
 }

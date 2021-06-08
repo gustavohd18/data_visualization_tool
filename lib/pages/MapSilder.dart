@@ -1,4 +1,6 @@
+import 'package:data_visualization/controller/data_controller.dart';
 import 'package:data_visualization/model/vaccine.dart';
+import 'package:data_visualization/widgets/checkList.dart';
 import 'package:data_visualization/widgets/seeMore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -8,9 +10,7 @@ import "package:collection/collection.dart";
 import 'package:intl/intl.dart';
 
 class MapSlider extends StatefulWidget {
-  const MapSlider({required this.vaccines});
-
-  final List<Vaccine> vaccines;
+  const MapSlider();
 
   @override
   _MapSliderState createState() => _MapSliderState();
@@ -22,14 +22,15 @@ class _MapSliderState extends State<MapSlider> {
   late Map<DateTime, List<Vaccine>> _data;
   late List<Vaccine> _dataFinal;
   late MapShapeSource _mapSource;
+  //bool ? _isChecked = false;
   DateTime _min = DateTime(2008, 01, 01);
   DateTime _max = DateTime(2018, 01, 01);
   DateTime _value = DateTime(2012, 01, 01);
 
   @override
   void initState() {
-    var newMap2 =
-        groupBy(widget.vaccines, (Vaccine obj) => obj.vacinaDataAplicacao);
+    final data = DataController().getListVaccinesPerDay();
+    var newMap2 = data;
 
     _min = newMap2.keys.min;
     _max = newMap2.keys.max;
@@ -119,6 +120,7 @@ class _MapSliderState extends State<MapSlider> {
             child: Column(children: [
       // TODO: FORMAT TEXT
       Text("VACINAVIZ"),
+      CheckList(),
       Expanded(
           child: Padding(
         padding: EdgeInsets.fromLTRB(10, 50, 0, 0),
@@ -206,6 +208,8 @@ class _MapSliderState extends State<MapSlider> {
                           element.vacinaNome == "Covid-19-AstraZeneca")
                       .length;
                   return SeeMore(
+                    size: 550,
+                    height: 500,
                     legend:
                         "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: $woman\n Homens:$man \n\n Raça:\n Branca: $blank\n Preta: $black\n Parda: $pard \n Amarela: $yellow \n Não informado: $noInformation \n\n Vacinas:\n Sinovac/Butantan:$butantan\n Covishield:$covishield\n AstraZeneca:$astraZeneca",
                     vaccines: _dataFinal,

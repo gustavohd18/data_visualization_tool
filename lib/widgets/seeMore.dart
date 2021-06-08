@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 
 class SeeMore extends StatefulWidget {
   const SeeMore(
-      {required this.vaccines, required this.legend, required this.state});
+      {required this.vaccines,
+      required this.legend,
+      required this.state,
+      required this.size,
+      required this.height});
 
+  final double size;
+  final double height;
   final String legend;
   final List<Vaccine> vaccines;
   final String state;
@@ -26,8 +32,8 @@ class _SeeMoreState extends State<SeeMore> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 550,
-        height: 500,
+        width: widget.size,
+        height: widget.height,
         child: Column(
           children: [
             Padding(
