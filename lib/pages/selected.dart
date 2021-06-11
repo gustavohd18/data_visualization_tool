@@ -35,7 +35,12 @@ class _SelectedState extends State<Selected> {
             child: Column(children: [
       Text("VACINAVIZ"),
       CheckList(),
-      RxBuilder(builder: (_) => MapData(type: controller.isAllData.value))
+      RxBuilder(
+          builder: (_) => controller.isReady.value
+              ? MapData(type: controller.isAllData.value)
+              : Center(
+                  child: Text("Processando os dados"),
+                ))
     ])));
   }
 }

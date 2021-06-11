@@ -117,9 +117,10 @@ class _MapRacState extends State<MapRac> {
                 final size = _dataFinal[index].total;
 
                 return SeeMore(
-                  size: 450,
-                  height: 350,
-                  legend: "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: ${_dataFinal[index].personWoman}\n Homens:${_dataFinal[index].personMan}\n\n  \n\n Vacinas:\n Sinovac/Butantan:${_dataFinal[index].butatan}\n Covishield:${_dataFinal[index].covishield}\n Pharma/Pfizer:${_dataFinal[index].pfizer}",
+                  size: 500,
+                  height: 450,
+                  legend:
+                      "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: ${_dataFinal[index].personWoman}\n Homens:${_dataFinal[index].personMan}\n\n  \n\n Vacinas:\n Sinovac/Butantan:${_dataFinal[index].butatan}\n Covishield:${_dataFinal[index].covishield}\n Pharma/Pfizer:${_dataFinal[index].pfizer}",
                   state: state,
                 );
               },

@@ -21,7 +21,7 @@ class DataController {
 
   final isSelectedData = RxNotifier<bool>(false);
 
-  final vaccines = RxNotifier<List<Vaccine>>([]);
+  final isReady = RxNotifier<bool>(false);
 
   final statesfilterMap = RxNotifier<Map<String, List<Vaccine>>>(Map());
 
@@ -35,6 +35,16 @@ class DataController {
 
   final statesDataRacMap = RxNotifier<Map<String, List<StateBr>>>(Map());
 
+  final statesfilterGenreMap = RxNotifier<Map<String, List<Vaccine>>>(Map());
+
+  final statesDataGenreMap = RxNotifier<Map<String, List<StateBr>>>(Map());
+
+  final statesfilterVaccineNameMap =
+      RxNotifier<Map<String, List<Vaccine>>>(Map());
+
+  final statesDataVaccineNameMap =
+      RxNotifier<Map<String, List<StateBr>>>(Map());
+
   setIsAllData(int value) {
     isAllData.value = value;
   }
@@ -46,12 +56,12 @@ class DataController {
   initData() async {
     String response = await rootBundle.loadString('assets/junho.json');
     final data = await jsonDecode(response);
-    vaccines.value = (data as List)
+    final vaccines = (data as List)
         .map((listVaccine) => Vaccine.vaccineFromJSON(listVaccine))
         .toList();
 
     statesfilterMap.value =
-        groupBy(vaccines.value, (Vaccine obj) => obj.pacienteEnderecoUf);
+        groupBy(vaccines, (Vaccine obj) => obj.pacienteEnderecoUf);
     statesfilterMap.value.forEach((key, value) {
       final woman =
           value.where((element) => element.pacienteSexo == "F").length;
@@ -97,7 +107,7 @@ class DataController {
     });
 
     statesfilterTimeMap.value =
-        groupBy(vaccines.value, (Vaccine obj) => obj.vacinaDataAplicacao);
+        groupBy(vaccines, (Vaccine obj) => obj.vacinaDataAplicacao);
     statesfilterTimeMap.value.forEach((key, value) {
       var states = groupBy(value, (Vaccine obj) => obj.pacienteEnderecoUf);
       List<StateBr> listFinalState = [];
@@ -150,8 +160,51 @@ class DataController {
     });
 
     statesfilterRacMap.value =
-        groupBy(vaccines.value, (Vaccine obj) => obj.pacienteRaca);
+        groupBy(vaccines, (Vaccine obj) => obj.pacienteRaca);
     statesfilterRacMap.value.forEach((key, value) {
+      var states = groupBy(value, (Vaccine obj) => obj.pacienteEnderecoUf);
+      List<StateBr> listFinalState = [];
+      states.forEach((key, value) {
+        final woman =
+            value.where((element) => element.pacienteSexo == "F").length;
+        final man =
+            value.where((element) => element.pacienteSexo == "M").length;
+        final size = value.length;
+
+        final butantan = value
+            .where((element) =>
+                element.vacinaNome == "Covid-19-Coronavac-Sinovac/Butantan")
+            .length;
+        final covishield = value
+            .where((element) =>
+                element.vacinaNome == "Vacina Covid-19 - Covishield")
+            .length;
+
+        final astraZeneca = value
+            .where((element) => element.vacinaNome == "Covid-19-AstraZeneca")
+            .length;
+
+        listFinalState.add(StateBr(
+            name: key,
+            personMan: man,
+            personWoman: woman,
+            personWhite: 0,
+            personBlack: 0,
+            personPard: 0,
+            personYellow: 0,
+            personNo: 0,
+            butatan: butantan,
+            covishield: covishield,
+            pfizer: astraZeneca,
+            total: size));
+      });
+
+      statesDataRacMap.value[key] = listFinalState;
+    });
+
+    statesfilterGenreMap.value =
+        groupBy(vaccines, (Vaccine obj) => obj.pacienteSexo);
+    statesfilterGenreMap.value.forEach((key, value) {
       var states = groupBy(value, (Vaccine obj) => obj.pacienteEnderecoUf);
       List<StateBr> listFinalState = [];
       states.forEach((key, value) {
@@ -195,9 +248,51 @@ class DataController {
             total: size));
       });
 
-      statesDataRacMap.value[key] = listFinalState;
+      statesDataGenreMap.value[key] = listFinalState;
     });
 
+    statesfilterVaccineNameMap.value =
+        groupBy(vaccines, (Vaccine obj) => obj.vacinaNome);
+    statesfilterVaccineNameMap.value.forEach((key, value) {
+      var states = groupBy(value, (Vaccine obj) => obj.pacienteEnderecoUf);
+      List<StateBr> listFinalState = [];
+      states.forEach((key, value) {
+        final size = value.length;
+        final woman =
+            value.where((element) => element.pacienteSexo == "F").length;
+        final man =
+            value.where((element) => element.pacienteSexo == "M").length;
+        final black =
+            value.where((element) => element.pacienteRaca == "02").length;
+        final blank =
+            value.where((element) => element.pacienteRaca == "01").length;
+        final pard =
+            value.where((element) => element.pacienteRaca == "03").length;
+        final yellow =
+            value.where((element) => element.pacienteRaca == "04").length;
+        final noInformation =
+            value.where((element) => element.pacienteRaca == "99").length;
+
+        listFinalState.add(StateBr(
+            name: key,
+            personMan: man,
+            personWoman: woman,
+            personWhite: blank,
+            personBlack: black,
+            personPard: pard,
+            personYellow: yellow,
+            personNo: noInformation,
+            butatan: 0,
+            covishield: 0,
+            pfizer: 0,
+            total: size));
+      });
+
+      statesDataVaccineNameMap.value[key] = listFinalState;
+    });
+
+    vaccines.clear();
+    isReady.value = true;
     print("Dados carregados");
   }
 
@@ -209,12 +304,12 @@ class DataController {
     return statesDataTimeMap.value;
   }
 
-  Map<String, List<Vaccine>> getListVaccinesPerGenre() {
-    return groupBy(vaccines.value, (Vaccine obj) => obj.pacienteSexo);
+  List<StateBr> getListVaccinesPerGenre(String genre) {
+    return statesDataGenreMap.value[genre]!;
   }
 
-  Map<String, List<Vaccine>> getListVaccinesPerName() {
-    return groupBy(vaccines.value, (Vaccine obj) => obj.vacinaNome);
+  List<StateBr> getListVaccinesPerName(String vaccineName) {
+    return statesDataVaccineNameMap.value[vaccineName]!;
   }
 
   List<StateBr> getListVaccinesPerRac(String rac) {

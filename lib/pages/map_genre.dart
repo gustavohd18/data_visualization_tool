@@ -1,4 +1,5 @@
 import 'package:data_visualization/controller/data_controller.dart';
+import 'package:data_visualization/model/state.dart';
 import 'package:data_visualization/model/vaccine.dart';
 import 'package:data_visualization/widgets/seeMore.dart';
 import 'package:flutter/material.dart';
@@ -15,41 +16,30 @@ class MapGenre extends StatefulWidget {
 }
 
 class _MapGenreState extends State<MapGenre> {
-  late Map<String, List<Vaccine>> _data;
-  late List<Vaccine> _dataFinal;
+  late List<StateBr> _data;
+  late List<StateBr> _dataFinal;
   late MapShapeSource _mapSource;
 
   @override
   void initState() {
-    final data = DataController().getListVaccinesPerGenre();
+    final data = DataController().getListVaccinesPerGenre(widget.genre);
     var newMap2 = data;
 
     _data = newMap2;
 
-    _dataFinal = _data.entries
-        .firstWhere((element) => element.key == widget.genre)
-        .value;
+    _dataFinal = _data;
 
     _mapSource = MapShapeSource.asset('assets/brazil.json',
         shapeDataField: 'sigla',
         dataCount: _dataFinal.length, primaryValueMapper: (int index) {
-      return _dataFinal[index].pacienteEnderecoUf;
+      return _dataFinal[index].name;
     }, dataLabelMapper: (int index) {
-      final state = _dataFinal[index].pacienteEnderecoUf;
-      final size = _dataFinal
-          .where((element) =>
-              element.pacienteEnderecoUf == state &&
-              element.pacienteSexo == widget.genre)
-          .length;
+      final state = _dataFinal[index].name;
+      final size = _dataFinal[index].total;
       final text = "$state\n $size";
       return text;
     }, shapeColorValueMapper: (int index) {
-      final size = _dataFinal
-          .where((element) =>
-              element.pacienteEnderecoUf ==
-                  _dataFinal[index].pacienteEnderecoUf &&
-              element.pacienteSexo == widget.genre)
-          .length;
+      final size = _dataFinal[index].total;
       if (size <= 1000) {
         return 10;
       } else if (size > 1000 && size <= 5000) {
@@ -122,18 +112,14 @@ class _MapGenreState extends State<MapGenre> {
               strokeColor: Colors.white,
               strokeWidth: 0.5,
               shapeTooltipBuilder: (BuildContext context, int index) {
-                final state = _dataFinal[index].pacienteEnderecoUf;
-                final size = _dataFinal
-                    .where((element) =>
-                        element.pacienteEnderecoUf ==
-                            _dataFinal[index].pacienteEnderecoUf &&
-                        element.pacienteSexo == widget.genre)
-                    .length;
+                final state = _dataFinal[index].name;
+                final size = _dataFinal[index].total;
 
                 return SeeMore(
-                  size: 150,
-                  height: 180,
-                  legend: "$state\n\n total vacinas:$size\n\n",
+                  size: 500,
+                  height: 450,
+                  legend:
+                      "$state\n\n total vacinas:$size \n\n Raça:\n Branca: ${_dataFinal[index].personWhite}\n Preta:${_dataFinal[index].personBlack}\n Parda:${_dataFinal[index].personPard}\nAmarela: ${_dataFinal[index].personYellow}\n Não informado: ${_dataFinal[index].personNo} \n\n Vacinas:\n Sinovac/Butantan:${_dataFinal[index].butatan}\n Covishield:${_dataFinal[index].covishield}\n Pharma/Pfizer:${_dataFinal[index].pfizer}",
                   state: state,
                 );
               },
