@@ -1,4 +1,5 @@
 import 'package:data_visualization/controller/data_controller.dart';
+import 'package:data_visualization/model/state.dart';
 import 'package:data_visualization/model/vaccine.dart';
 import 'package:data_visualization/widgets/seeMore.dart';
 import 'package:flutter/material.dart';
@@ -15,41 +16,31 @@ class MapRac extends StatefulWidget {
 }
 
 class _MapRacState extends State<MapRac> {
-  late Map<String, List<Vaccine>> _data;
-  late List<Vaccine> _dataFinal;
+  late List<StateBr> _data;
+  late List<StateBr> _dataFinal;
   late MapShapeSource _mapSource;
 
   @override
   void initState() {
-    final data = DataController().getListVaccinesPerRac();
+    final data = DataController().getListVaccinesPerRac(widget.rac);
     var newMap2 = data;
 
     _data = newMap2;
 
     // genre for parameter maybe
-    _dataFinal =
-        _data.entries.firstWhere((element) => element.key == widget.rac).value;
+    _dataFinal = _data;
 
     _mapSource = MapShapeSource.asset('assets/brazil.json',
         shapeDataField: 'sigla',
         dataCount: _dataFinal.length, primaryValueMapper: (int index) {
-      return _dataFinal[index].pacienteEnderecoUf;
+      return _dataFinal[index].name;
     }, dataLabelMapper: (int index) {
-      final state = _dataFinal[index].pacienteEnderecoUf;
-      final size = _dataFinal
-          .where((element) =>
-              element.pacienteEnderecoUf == state &&
-              element.pacienteRaca == widget.rac)
-          .length;
+      final state = _dataFinal[index].name;
+      final size = _dataFinal[index].total;
       final text = "$state\n $size";
       return text;
     }, shapeColorValueMapper: (int index) {
-      final size = _dataFinal
-          .where((element) =>
-              element.pacienteEnderecoUf ==
-                  _dataFinal[index].pacienteEnderecoUf &&
-              element.pacienteRaca == widget.rac)
-          .length;
+      final size = _dataFinal[index].total;
       if (size <= 1000) {
         return 10;
       } else if (size > 1000 && size <= 5000) {
@@ -122,18 +113,13 @@ class _MapRacState extends State<MapRac> {
               strokeColor: Colors.white,
               strokeWidth: 0.5,
               shapeTooltipBuilder: (BuildContext context, int index) {
-                final state = _dataFinal[index].pacienteEnderecoUf;
-                final size = _dataFinal
-                    .where((element) =>
-                        element.pacienteEnderecoUf ==
-                            _dataFinal[index].pacienteEnderecoUf &&
-                        element.pacienteRaca == widget.rac)
-                    .length;
+                final state = _dataFinal[index].name;
+                final size = _dataFinal[index].total;
 
                 return SeeMore(
-                  size: 150,
-                  height: 180,
-                  legend: "$state\n\n total vacinas:$size\n\n",
+                  size: 450,
+                  height: 350,
+                  legend: "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: ${_dataFinal[index].personWoman}\n Homens:${_dataFinal[index].personMan}\n\n  \n\n Vacinas:\n Sinovac/Butantan:${_dataFinal[index].butatan}\n Covishield:${_dataFinal[index].covishield}\n Pharma/Pfizer:${_dataFinal[index].pfizer}",
                   state: state,
                 );
               },

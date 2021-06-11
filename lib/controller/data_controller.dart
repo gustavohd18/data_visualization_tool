@@ -31,6 +31,10 @@ class DataController {
 
   final statesDataTimeMap = RxNotifier<Map<DateTime, List<StateBr>>>(Map());
 
+  final statesfilterRacMap = RxNotifier<Map<String, List<Vaccine>>>(Map());
+
+  final statesDataRacMap = RxNotifier<Map<String, List<StateBr>>>(Map());
+
   setIsAllData(int value) {
     isAllData.value = value;
   }
@@ -40,7 +44,7 @@ class DataController {
   }
 
   initData() async {
-    String response = await rootBundle.loadString('assets/janeiro.json');
+    String response = await rootBundle.loadString('assets/junho.json');
     final data = await jsonDecode(response);
     vaccines.value = (data as List)
         .map((listVaccine) => Vaccine.vaccineFromJSON(listVaccine))
@@ -145,6 +149,55 @@ class DataController {
       statesDataTimeMap.value[key] = listFinalState;
     });
 
+    statesfilterRacMap.value =
+        groupBy(vaccines.value, (Vaccine obj) => obj.pacienteRaca);
+    statesfilterRacMap.value.forEach((key, value) {
+      var states = groupBy(value, (Vaccine obj) => obj.pacienteEnderecoUf);
+      List<StateBr> listFinalState = [];
+      states.forEach((key, value) {
+        final size = value.length;
+        final black =
+            value.where((element) => element.pacienteRaca == "02").length;
+        final blank =
+            value.where((element) => element.pacienteRaca == "01").length;
+        final pard =
+            value.where((element) => element.pacienteRaca == "03").length;
+        final yellow =
+            value.where((element) => element.pacienteRaca == "04").length;
+        final noInformation =
+            value.where((element) => element.pacienteRaca == "99").length;
+
+        final butantan = value
+            .where((element) =>
+                element.vacinaNome == "Covid-19-Coronavac-Sinovac/Butantan")
+            .length;
+        final covishield = value
+            .where((element) =>
+                element.vacinaNome == "Vacina Covid-19 - Covishield")
+            .length;
+
+        final astraZeneca = value
+            .where((element) => element.vacinaNome == "Covid-19-AstraZeneca")
+            .length;
+
+        listFinalState.add(StateBr(
+            name: key,
+            personMan: 0,
+            personWoman: 0,
+            personWhite: blank,
+            personBlack: black,
+            personPard: pard,
+            personYellow: yellow,
+            personNo: noInformation,
+            butatan: butantan,
+            covishield: covishield,
+            pfizer: astraZeneca,
+            total: size));
+      });
+
+      statesDataRacMap.value[key] = listFinalState;
+    });
+
     print("Dados carregados");
   }
 
@@ -164,8 +217,8 @@ class DataController {
     return groupBy(vaccines.value, (Vaccine obj) => obj.vacinaNome);
   }
 
-  Map<String, List<Vaccine>> getListVaccinesPerRac() {
-    return groupBy(vaccines.value, (Vaccine obj) => obj.pacienteRaca);
+  List<StateBr> getListVaccinesPerRac(String rac) {
+    return statesDataRacMap.value[rac]!;
   }
 
   DataController._internal();
