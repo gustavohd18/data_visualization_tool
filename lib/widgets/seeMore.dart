@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 class SeeMore extends StatefulWidget {
   const SeeMore(
-      {required this.vaccines,
-      required this.legend,
+      {required this.legend,
       required this.state,
       required this.size,
       required this.height});
@@ -12,7 +11,6 @@ class SeeMore extends StatefulWidget {
   final double size;
   final double height;
   final String legend;
-  final List<Vaccine> vaccines;
   final String state;
 
   @override
@@ -20,15 +18,6 @@ class SeeMore extends StatefulWidget {
 }
 
 class _SeeMoreState extends State<SeeMore> {
-  late int size;
-  @override
-  void initState() {
-    size = widget.vaccines
-        .where((element) => element.pacienteEnderecoUf == widget.state)
-        .length;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(

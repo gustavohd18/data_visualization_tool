@@ -21,4 +21,12 @@ class Vaccine {
       pacienteRaca: json['paciente_racaCor_codigo'].toString(),
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        '"vacina_nome"': '"${vacinaNome}"',
+        '"paciente_endereco_uf"': '"${pacienteEnderecoUf}"',
+        '"paciente_enumSexoBiologico"': '"${pacienteSexo}"',
+        '"paciente_racaCor_codigo"': '"${pacienteRaca}"',
+        '"vacina_dataAplicacao"': '"${vacinaDataAplicacao}"',
+      };
 }
