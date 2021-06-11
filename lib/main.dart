@@ -3,8 +3,6 @@ import 'package:data_visualization/pages/selected.dart';
 import 'package:flutter/material.dart';
 
 void main(List<String> arguments) async {
-  await DataController().initData();
-
   return runApp(MapsApp());
 }
 

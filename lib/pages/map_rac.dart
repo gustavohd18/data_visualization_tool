@@ -134,7 +134,6 @@ class _MapRacState extends State<MapRac> {
                   size: 150,
                   height: 180,
                   legend: "$state\n\n total vacinas:$size\n\n",
-                  vaccines: _dataFinal,
                   state: state,
                 );
               },

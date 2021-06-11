@@ -17,8 +17,13 @@ class Selected extends StatefulWidget {
 
 class _SelectedState extends State<Selected> {
   late DataController controller;
+  void loadData() async {
+    await DataController().initData();
+  }
+
   @override
   void initState() {
+    loadData();
     controller = DataController();
     super.initState();
   }

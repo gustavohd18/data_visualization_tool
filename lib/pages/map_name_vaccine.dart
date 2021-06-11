@@ -145,7 +145,6 @@ class _MapVaccineState extends State<MapVaccine> {
                     size: 150,
                     height: 180,
                     legend: "$state\n\n total vacinas:$size\n\n",
-                    vaccines: _dataFinal,
                     state: state,
                   );
                 },

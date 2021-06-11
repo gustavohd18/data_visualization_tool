@@ -1,5 +1,6 @@
 import 'package:data_visualization/controller/data_controller.dart';
 import 'package:data_visualization/model/vaccine.dart';
+import 'package:data_visualization/model/state.dart';
 import 'package:data_visualization/widgets/seeMore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -15,7 +16,7 @@ class MapTotal extends StatefulWidget {
 class _MapTotalState extends State<MapTotal> {
   _MapTotalState();
 
-  late Map<String, List<Vaccine>> _data;
+  late Map<String, StateBr> _data;
   late MapShapeSource _mapSource;
 
   @override
@@ -32,15 +33,15 @@ class _MapTotalState extends State<MapTotal> {
       return keys.elementAt(index);
     }, dataLabelMapper: (int index) {
       var values = _data.values;
-      final List<Vaccine> list = values.elementAt(index);
+      final StateBr stateData = values.elementAt(index);
       final keys = _data.keys;
       final state = keys.elementAt(index);
-      final text = "$state\n ${list.length.toString()}";
+      final text = "$state\n ${stateData.total}";
       return text;
     }, shapeColorValueMapper: (int index) {
       var values = _data.values;
-      final List<Vaccine> list = values.elementAt(index);
-      final size = list.length;
+      final StateBr stateData = values.elementAt(index);
+      final size = stateData.total;
       if (size <= 1000) {
         return 10;
       } else if (size > 1000 && size <= 5000) {
@@ -114,76 +115,13 @@ class _MapTotalState extends State<MapTotal> {
               strokeWidth: 0.5,
               shapeTooltipBuilder: (BuildContext context, int index) {
                 final state = _data.keys.elementAt(index);
-                final size = _data.values.elementAt(index).length;
-                final woman = _data.values
-                    .elementAt(index)
-                    .where((element) =>
-                        element.pacienteEnderecoUf == state &&
-                        element.pacienteSexo == "F")
-                    .length;
-                final man = _data.values
-                    .elementAt(index)
-                    .where((element) =>
-                        element.pacienteEnderecoUf == state &&
-                        element.pacienteSexo == "M")
-                    .length;
-                final black = _data.values
-                    .elementAt(index)
-                    .where((element) =>
-                        element.pacienteEnderecoUf == state &&
-                        element.pacienteRaca == "02")
-                    .length;
-                final blank = _data.values
-                    .elementAt(index)
-                    .where((element) =>
-                        element.pacienteEnderecoUf == state &&
-                        element.pacienteRaca == "01")
-                    .length;
-                final pard = _data.values
-                    .elementAt(index)
-                    .where((element) =>
-                        element.pacienteEnderecoUf == state &&
-                        element.pacienteRaca == "03")
-                    .length;
-                final yellow = _data.values
-                    .elementAt(index)
-                    .where((element) =>
-                        element.pacienteEnderecoUf == state &&
-                        element.pacienteRaca == "04")
-                    .length;
-                final noInformation = _data.values
-                    .elementAt(index)
-                    .where((element) =>
-                        element.pacienteEnderecoUf == state &&
-                        element.pacienteRaca == "99")
-                    .length;
+                final StateBr stateData = _data.values.elementAt(index);
 
-                final butantan = _data.values
-                    .elementAt(index)
-                    .where((element) =>
-                        element.pacienteEnderecoUf == state &&
-                        element.vacinaNome ==
-                            "Covid-19-Coronavac-Sinovac/Butantan")
-                    .length;
-                final covishield = _data.values
-                    .elementAt(index)
-                    .where((element) =>
-                        element.pacienteEnderecoUf == state &&
-                        element.vacinaNome == "Vacina Covid-19 - Covishield")
-                    .length;
-
-                final astraZeneca = _data.values
-                    .elementAt(index)
-                    .where((element) =>
-                        element.pacienteEnderecoUf == state &&
-                        element.vacinaNome == "Covid-19-AstraZeneca")
-                    .length;
                 return SeeMore(
                   size: 550,
                   height: 500,
                   legend:
-                      "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: $woman\n Homens:$man\n\n Raça:\n Branca: $blank\n Preta: $black\n Parda: $pard \nAmarela: $yellow \n Não informado: $noInformation \n\n Vacinas:\n Sinovac/Butantan:$butantan\n Covishield:$covishield\n Pharma/Pfizer:$astraZeneca",
-                  vaccines: _data.values.elementAt(index),
+                      "$state\n\n total vacinas:${stateData.total}\n\n Gênero:\n Mulheres: ${stateData.personWoman}\n Homens:${stateData.personMan}\n\n Raça:\n Branca: ${stateData.personWhite}\n Preta:${stateData.personBlack}\n Parda:${stateData.personPard}\nAmarela: ${stateData.personYellow}\n Não informado: ${stateData.personNo} \n\n Vacinas:\n Sinovac/Butantan:${stateData.butatan}\n Covishield:${stateData.covishield}\n Pharma/Pfizer:${stateData.pfizer}",
                   state: "",
                 );
               },

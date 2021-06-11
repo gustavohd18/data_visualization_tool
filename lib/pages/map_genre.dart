@@ -134,7 +134,6 @@ class _MapGenreState extends State<MapGenre> {
                   size: 150,
                   height: 180,
                   legend: "$state\n\n total vacinas:$size\n\n",
-                  vaccines: _dataFinal,
                   state: state,
                 );
               },

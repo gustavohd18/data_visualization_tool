@@ -1,4 +1,5 @@
 import 'package:data_visualization/controller/data_controller.dart';
+import 'package:data_visualization/model/state.dart';
 import 'package:data_visualization/model/vaccine.dart';
 import 'package:data_visualization/widgets/seeMore.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +19,9 @@ class MapDays extends StatefulWidget {
 class _MapDaysState extends State<MapDays> {
   _MapDaysState();
 
-  late Map<DateTime, List<Vaccine>> _data;
-  late List<Vaccine> _dataFinal;
+  late Map<DateTime, List<StateBr>> _data;
+  late List<StateBr> _dataFinal;
   late MapShapeSource _mapSource;
-  //bool ? _isChecked = false;
   DateTime _min = DateTime(2008, 01, 01);
   DateTime _max = DateTime(2018, 01, 01);
   DateTime _value = DateTime(2012, 01, 01);
@@ -43,20 +43,14 @@ class _MapDaysState extends State<MapDays> {
     _mapSource = MapShapeSource.asset('assets/brazil.json',
         shapeDataField: 'sigla',
         dataCount: _dataFinal.length, primaryValueMapper: (int index) {
-      return _dataFinal[index].pacienteEnderecoUf;
+      return _dataFinal[index].name;
     }, dataLabelMapper: (int index) {
-      final state = _dataFinal[index].pacienteEnderecoUf;
-      final size = _dataFinal
-          .where((element) => element.pacienteEnderecoUf == state)
-          .length;
+      final state = _dataFinal[index].name;
+      final size = _dataFinal[index].total;
       final text = "$state\n $size";
       return text;
     }, shapeColorValueMapper: (int index) {
-      final size = _dataFinal
-          .where((element) =>
-              element.pacienteEnderecoUf ==
-              _dataFinal[index].pacienteEnderecoUf)
-          .length;
+      final size = _dataFinal[index].total;
       if (size <= 1000) {
         return 10;
       } else if (size > 1000 && size <= 5000) {
@@ -131,81 +125,25 @@ class _MapDaysState extends State<MapDays> {
                 strokeColor: Colors.white,
                 strokeWidth: 0.5,
                 shapeTooltipBuilder: (BuildContext context, int index) {
-                  final state = _dataFinal[index].pacienteEnderecoUf;
-                  final size = _dataFinal
-                      .where((element) =>
-                          element.pacienteEnderecoUf ==
-                          _dataFinal[index].pacienteEnderecoUf)
-                      .length;
-                  final woman = _dataFinal
-                      .where((element) =>
-                          element.pacienteEnderecoUf ==
-                              _dataFinal[index].pacienteEnderecoUf &&
-                          element.pacienteSexo == "F")
-                      .length;
-                  final man = _dataFinal
-                      .where((element) =>
-                          element.pacienteEnderecoUf ==
-                              _dataFinal[index].pacienteEnderecoUf &&
-                          element.pacienteSexo == "M")
-                      .length;
-                  final black = _dataFinal
-                      .where((element) =>
-                          element.pacienteEnderecoUf ==
-                              _dataFinal[index].pacienteEnderecoUf &&
-                          element.pacienteRaca == "02")
-                      .length;
-                  final blank = _dataFinal
-                      .where((element) =>
-                          element.pacienteEnderecoUf ==
-                              _dataFinal[index].pacienteEnderecoUf &&
-                          element.pacienteRaca == "01")
-                      .length;
-                  final pard = _dataFinal
-                      .where((element) =>
-                          element.pacienteEnderecoUf ==
-                              _dataFinal[index].pacienteEnderecoUf &&
-                          element.pacienteRaca == "03")
-                      .length;
-                  final yellow = _dataFinal
-                      .where((element) =>
-                          element.pacienteEnderecoUf ==
-                              _dataFinal[index].pacienteEnderecoUf &&
-                          element.pacienteRaca == "04")
-                      .length;
-                  final noInformation = _dataFinal
-                      .where((element) =>
-                          element.pacienteEnderecoUf ==
-                              _dataFinal[index].pacienteEnderecoUf &&
-                          element.pacienteRaca == "99")
-                      .length;
+                  final state = _dataFinal[index].name;
+                  final size = _dataFinal[index].total;
+                  final woman = _dataFinal[index].personWoman;
+                  final man = _dataFinal[index].personMan;
+                  final black = _dataFinal[index].personBlack;
+                  final blank = _dataFinal[index].personWhite;
+                  final pard = _dataFinal[index].personPard;
+                  final yellow = _dataFinal[index].personYellow;
+                  final noInformation = _dataFinal[index].personNo;
 
-                  final butantan = _dataFinal
-                      .where((element) =>
-                          element.pacienteEnderecoUf ==
-                              _dataFinal[index].pacienteEnderecoUf &&
-                          element.vacinaNome ==
-                              "Covid-19-Coronavac-Sinovac/Butantan")
-                      .length;
-                  final covishield = _dataFinal
-                      .where((element) =>
-                          element.pacienteEnderecoUf ==
-                              _dataFinal[index].pacienteEnderecoUf &&
-                          element.vacinaNome == "Vacina Covid-19 - Covishield")
-                      .length;
+                  final butantan = _dataFinal[index].butatan;
+                  final covishield = _dataFinal[index].covishield;
 
-                  final astraZeneca = _dataFinal
-                      .where((element) =>
-                          element.pacienteEnderecoUf ==
-                              _dataFinal[index].pacienteEnderecoUf &&
-                          element.vacinaNome == "Covid-19-AstraZeneca")
-                      .length;
+                  final astraZeneca = _dataFinal[index].pfizer;
                   return SeeMore(
                     size: 550,
                     height: 500,
                     legend:
                         "$state\n\n total vacinas:$size\n\n Gênero:\n Mulheres: $woman\n Homens:$man \n\n Raça:\n Branca: $blank\n Preta: $black\n Parda: $pard \n Amarela: $yellow \n Não informado: $noInformation \n\n Vacinas:\n Sinovac/Butantan:$butantan\n Covishield:$covishield\n Pharma/Pfizer:$astraZeneca",
-                    vaccines: _dataFinal,
                     state: state,
                   );
                 },
@@ -240,20 +178,14 @@ class _MapDaysState extends State<MapDays> {
             _mapSource = MapShapeSource.asset('assets/brazil.json',
                 shapeDataField: 'sigla',
                 dataCount: _dataFinal.length, primaryValueMapper: (int index) {
-              return _dataFinal[index].pacienteEnderecoUf;
+              return _dataFinal[index].name;
             }, dataLabelMapper: (int index) {
-              final state = _dataFinal[index].pacienteEnderecoUf;
-              final size = _dataFinal
-                  .where((element) => element.pacienteEnderecoUf == state)
-                  .length;
+              final state = _dataFinal[index].name;
+              final size = _dataFinal[index].total;
               final text = "$state\n $size";
               return text;
             }, shapeColorValueMapper: (int index) {
-              final size = _dataFinal
-                  .where((element) =>
-                      element.pacienteEnderecoUf ==
-                      _dataFinal[index].pacienteEnderecoUf)
-                  .length;
+              final size = _dataFinal[index].total;
               if (size <= 1000) {
                 return 10;
               } else if (size > 1000 && size <= 5000) {
