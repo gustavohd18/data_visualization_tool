@@ -19,6 +19,8 @@ class DataController {
 
   final isAllData = RxNotifier<int>(1);
 
+  final selectedData = RxNotifier<int>(0); // 0 january and 1 june for now
+
   final isSelectedData = RxNotifier<bool>(false);
 
   final isReady = RxNotifier<bool>(false);
@@ -49,12 +51,41 @@ class DataController {
     isAllData.value = value;
   }
 
+  setSelectedData(int value) {
+    selectedData.value = value;
+  }
+
   setIsSelectedData(bool value) {
     isSelectedData.value = value;
   }
 
   initData() async {
-    String response = await rootBundle.loadString('assets/junho.json');
+    isReady.value = false;
+    String response = "";
+    statesfilterMap.value = Map();
+
+    statesDataMap.value = Map();
+
+    statesfilterTimeMap.value = Map();
+
+    statesDataTimeMap.value = Map();
+
+    statesfilterRacMap.value = Map();
+
+    statesDataRacMap.value = Map();
+
+    statesfilterGenreMap.value = Map();
+
+    statesDataGenreMap.value = Map();
+
+    statesfilterVaccineNameMap.value = Map();
+
+    statesDataVaccineNameMap.value = Map();
+    if (selectedData.value == 0) {
+      response = await rootBundle.loadString('assets/janeiro.json');
+    } else if (selectedData.value == 1) {
+      response = await rootBundle.loadString('assets/junho.json');
+    }
     final data = await jsonDecode(response);
     final vaccines = (data as List)
         .map((listVaccine) => Vaccine.vaccineFromJSON(listVaccine))

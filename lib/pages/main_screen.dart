@@ -4,26 +4,37 @@ import 'package:data_visualization/pages/map_genre.dart';
 import 'package:data_visualization/pages/map_name_vaccine.dart';
 import 'package:data_visualization/pages/map_rac.dart';
 import 'package:data_visualization/pages/map_vaccines.dart';
-import 'package:data_visualization/widgets/checkList.dart';
+import 'package:data_visualization/pages/selected.dart';
+import 'package:data_visualization/widgets/checkListData.dart';
 import 'package:flutter/material.dart';
-import 'package:rx_notifier/rx_notifier.dart';
 
-class Selected extends StatefulWidget {
-  const Selected({Key? key}) : super(key: key);
-
+class MainScreen extends StatefulWidget {
   @override
-  _SelectedState createState() => _SelectedState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _SelectedState extends State<Selected> {
+class _MainScreenState extends State<MainScreen> {
   late DataController controller;
-  void loadData() async {
-    await DataController().initData();
+  void loadData() {
+    DataController().initData();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Selected()),
+    );
   }
+
+  final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+    onPrimary: Colors.blue,
+    primary: Colors.grey[300],
+    minimumSize: Size(88, 36),
+    padding: EdgeInsets.symmetric(horizontal: 16),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(2)),
+    ),
+  );
 
   @override
   void initState() {
-    loadData();
     controller = DataController();
     super.initState();
   }
@@ -32,27 +43,18 @@ class _SelectedState extends State<Selected> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-            child: Column(
-              children: [
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-        ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('Go back!')),
-        Text("VACINAVIZ"),
-      ]),
-      CheckList(),
-      RxBuilder(
-          builder: (_) => controller.isReady.value
-              ? MapData(type: controller.isAllData.value)
-              : Center(
-                  child: Text("Processando os dados"),
-                ))
-    ])));
+            child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+      Text("Bem vindo ao VACINAVIZ", style: TextStyle(fontSize: 20),),
+      Text("Selecione o mês para visualização:", style: TextStyle(fontSize: 14)),
+      CheckListData(),
+      ElevatedButton(
+        onPressed: () => loadData(),
+        child: Text('Iniciar'),
+      ),
+    ]))));
   }
 }
 
