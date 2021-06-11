@@ -45,16 +45,20 @@ class _MainScreenState extends State<MainScreen> {
         body: SafeArea(
             child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-      Text("Bem vindo ao VACINAVIZ", style: TextStyle(fontSize: 20),),
-      Text("Selecione o mês para visualização:", style: TextStyle(fontSize: 14)),
-      CheckListData(),
-      ElevatedButton(
-        onPressed: () => loadData(),
-        child: Text('Iniciar'),
-      ),
-    ]))));
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+          Text(
+            "Bem vindo ao VACINAVIZ",
+            style: TextStyle(fontSize: 20),
+          ),
+          Text("Selecione o mês para visualização:",
+              style: TextStyle(fontSize: 14)),
+          CheckListData(),
+          ElevatedButton(
+            onPressed: () => loadData(),
+            child: Text('Iniciar'),
+          ),
+        ]))));
   }
 }
 

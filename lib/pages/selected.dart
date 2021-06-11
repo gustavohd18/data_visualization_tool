@@ -32,19 +32,24 @@ class _SelectedState extends State<Selected> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-            child: Column(
-              children: [
+            child: Column(children: [
       Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-        ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('Go back!')),
-        Text("VACINAVIZ"),
-      ]),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+                size: 24,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            Text("VACINAVIZ"),
+            Text(""),
+          ]),
       CheckList(),
       RxBuilder(
           builder: (_) => controller.isReady.value
